@@ -1,0 +1,18 @@
+{
+  "Tools that send x-subscription-format: links get share links whatever their UA. Enable if your tooling uses it.": "Утилиты, которые шлют x-subscription-format: links, получают ссылки при любом UA. Включите, если ваши инструменты это используют.",
+  "iOS Network Extension ~50 MB. no-limit-enabled is a beta Advanced parameter: it needs providerid (global header).": "Network Extension на iOS ~50 МБ. no-limit-enabled — бета-параметр Advanced: нужен providerid (глобальный заголовок).",
+  "INCY documents no-limit-enabled as an enable-only memory-tight NE mode.": "INCY документирует no-limit-enabled как экономный по памяти режим NE, который можно только включить.",
+  "Same host set as iOS for phones.": "Тот же набор хостов, что на iOS, — для телефонов.",
+  "Explicit, so it does not depend on serveJsonAtBaseSubscription.": "Отдельным правилом, чтобы не зависеть от serveJsonAtBaseSubscription.",
+  "Each array element becomes a Custom Xray Config named from remarks. Older Throne: links.": "Каждый элемент массива становится Custom Xray Config с именем из remarks. Старый Throne — ссылки.",
+  "UA starts with v2rayN/ on purpose: must stay above the v2rayN rule.": "UA намеренно начинается с v2rayN/: правило должно стоять выше правила v2rayN.",
+  "Template must contain a routing key, or v2rayNG does not take it as a full config.": "В шаблоне должен быть ключ routing, иначе v2rayNG не примет его как полный конфиг.",
+  "3-part version and nothing after it: excludes Passwall2's default v2rayN/9.99.": "Версия из трёх частей и ничего после неё: исключает стандартный v2rayN/9.99 у Passwall2.",
+  "Streisand, V2Box (Remnawave: all versions), Wrabbit (operator-observed), v2plus.": "Streisand, V2Box (Remnawave: все версии), Wrabbit (по наблюдениям оператора), v2plus.",
+  "Sends exactly clash.meta/mihomo by default but only reads sing-box JSON outbounds.": "По умолчанию шлёт ровно clash.meta/mihomo, но читает только outbounds из JSON sing-box.",
+  "Must stay above ^clash, or these get CLASH and lose XHTTP. Adds ClashX Meta (%20) and Clash Mi to the default.": "Должно стоять выше ^clash, иначе эти клиенты получат CLASH и потеряют XHTTP. К стандартному правилу добавлены ClashX Meta (%20) и Clash Mi.",
+  "Response with generated YAML config (Stash Template)": "Ответ сгенерированным YAML-конфигом (шаблон Stash)",
+  "SFA/SFI/SFM/SFT plus SFW/SFL (desktop, 1.14) and bare SFM (DeskBox); karing anywhere. Hiddify and husi are deliberately not here: they are better with links.": "SFA/SFI/SFM/SFT, а также SFW/SFL (десктоп, 1.14) и просто SFM (DeskBox); karing — в любом месте UA. Hiddify и husi здесь намеренно нет: им лучше ссылки.",
+  "Whatever is left that starts with clash: ClashforWindows (also Murge), legacy builds.": "Всё оставшееся, что начинается с clash: ClashforWindows (и Murge), старые сборки.",
+  "Release notes mention JSON with balancers; unverified. No version in the UA, so no gate.": "В release notes упомянут JSON с балансировщиками; не проверено. В UA нет версии, поэтому без ограничения по версии."
+}

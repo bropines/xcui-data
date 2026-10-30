@@ -1,0 +1,24 @@
+{
+  "installationGuideHeader": { "en": "Installation", "ru": "Установка" },
+  "connectionKeysHeader": { "en": "Connection keys", "ru": "Ключи подключения" },
+  "linkCopied": { "en": "Link copied", "ru": "Ссылка скопирована" },
+  "linkCopiedToClipboard": { "en": "Link copied to clipboard", "ru": "Ссылка скопирована в буфер обмена" },
+  "getLink": { "en": "Get link", "ru": "Получить ссылку" },
+  "scanQrCode": { "en": "Scan the QR code above in the app", "ru": "Отсканируйте QR-код в приложении" },
+  "scanQrCodeDescription": {
+    "en": "Or copy the link below and paste it into the app",
+    "ru": "Или скопируйте ссылку ниже и вставьте её в приложение"
+  },
+  "copyLink": { "en": "Copy link", "ru": "Скопировать ссылку" },
+  "name": { "en": "Username", "ru": "Имя пользователя" },
+  "status": { "en": "Status", "ru": "Статус" },
+  "active": { "en": "Active", "ru": "Активна" },
+  "inactive": { "en": "Inactive", "ru": "Неактивна" },
+  "expires": { "en": "Expires", "ru": "Истекает" },
+  "bandwidth": { "en": "Bandwidth", "ru": "Трафик" },
+  "scanToImport": { "en": "Scan to import this key", "ru": "Отсканируйте, чтобы импортировать ключ" },
+  "expiresIn": { "en": "Expires", "ru": "Истекает" },
+  "expired": { "en": "Expired", "ru": "Истекла" },
+  "unknown": { "en": "Unknown", "ru": "Неизвестно" },
+  "indefinitely": { "en": "Indefinitely", "ru": "Бессрочно" }
+}

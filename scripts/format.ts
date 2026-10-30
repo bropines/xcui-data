@@ -25,5 +25,5 @@ const walk = (dir: string) => {
         if (next !== text) { writeFileSync(path, next); changed++; console.log(`formatted ${relative(root, path)}`); }
     }
 };
-walk(join(root, 'clients'));
+for (const dir of ['clients', 'rules', 'geo', 'subpage']) walk(join(root, dir));
 console.log(changed ? `${changed} file(s) rewritten` : 'every file already in format');

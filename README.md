@@ -10,6 +10,19 @@ The data the [Xray Config UI Editor](https://github.com/bropines/xray-config-ui-
 - **Every version tag** (`v0.2.0`) attaches the package tarball to a GitHub Release. The editor installs it from there, and builds in the snapshot it carries. That snapshot is what the editor shows before the download arrives, or when it cannot reach Pages.
 - The editor checks a downloaded copy against the same schema as CI. It takes the copy only when the copy is valid and no older than the snapshot it already has. A broken file on Pages cannot get past CI. Even if one did, the editor would keep what it had.
 
+## What is here
+
+| path | what |
+| --- | --- |
+| `clients/apps/<id>.json` | one client app: User-Agents, formats, deep links, downloads, logo key, sources |
+| `clients/order.json`, `samples.json`, `notation.json`, `i18n/<lang>.json` | app order, User-Agents seen in the wild, notation, translations of the apps' texts |
+| `rules/blueprints.json`, `rules/i18n/<lang>.json` | the Response Rules "Generate from KB" writes (panel order) and their descriptions' translations |
+| `geo/sources.json` | where a page gets geoip / geosite lists (`check`: the real-core check, `viewer`: the list viewer) |
+| `subpage/base-texts.json` | a subscription page's base translation texts |
+| `icons/<key>.svg` | logos for apps Remnawave's default page has none for |
+
+A weekly run (`bun run links`) checks that every geo file still answers a page and is about its stated size, and that every download link answers.
+
 ## Editing an app
 
 Each app is one file: `clients/apps/<id>.json`. Edit it on GitHub (the pencil button) or locally. In VS Code the `$schema` line on top gives completion and checks as you type.

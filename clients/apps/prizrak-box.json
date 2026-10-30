@@ -21,12 +21,9 @@
     "macos": [
       {
         "label": "Apple Silicon",
-        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-arm64-dmg.zip"
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-arm64.zip"
       },
-      {
-        "label": "Intel",
-        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-amd64-dmg.zip"
-      }
+      { "label": "Intel", "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-amd64.zip" }
     ],
     "linux": [
       {

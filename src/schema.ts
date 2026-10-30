@@ -10,6 +10,11 @@
  * fact with no source is a guess, and the data marks it as one (`inferred` /
  * `unverified`) rather than leaving the reader to assume it was checked.
  *
+ * Objects are not strict here, so an editor reading a newer document drops
+ * a field it does not know instead of refusing the whole document; CI fails
+ * on any key the schema does not name (source.ts, unknownKeys), so a typo
+ * still cannot get in.
+ *
  * Regexes are written for Remnawave Response Rules with `caseSensitive: false`:
  * the panel lowercases the PATTERN as well as the value and compiles with `i`
  * (remnawave/backend@3.4.7 src/modules/subscription-response-rules/services/
@@ -43,7 +48,7 @@ const tri = z.union([z.literal(true), z.literal(false), z.literal('partial'), z.
 /** A JS RegExp source that compiles. */
 const regex = text.refine(value => { try { new RegExp(value, 'i'); return true; } catch { return false; } }, 'not a valid regular expression');
 
-export const SourceSchema = z.object({ ref: text, kind: z.enum(EVIDENCE) }).strict();
+export const SourceSchema = z.object({ ref: text, kind: z.enum(EVIDENCE) });
 
 export const UaPatternSchema = z.object({
     platform: z.array(platform).optional(),
@@ -53,32 +58,32 @@ export const UaPatternSchema = z.object({
     example: text.describe('A real (or, with a note saying so, illustrative) User-Agent this pattern matches.'),
     note: text.optional(),
     src,
-}).strict();
+});
 
 export const RequestHeaderSchema = z.object({
     name: text,
     value: text,
     when: z.enum(['always', 'default-on', 'default-off', 'opt-in', 'unknown']),
     src,
-}).strict();
+});
 
-export const HeaderReadSchema = z.object({ name: text, format: text.optional(), since: text.optional(), note: text.optional(), src }).strict();
+export const HeaderReadSchema = z.object({ name: text, format: text.optional(), since: text.optional(), note: text.optional(), src });
 
 export const DeepLinkSchema = z.object({
     template: text.describe('`{URL}` raw subscription URL, `{URL_ENC}` encodeURIComponent(URL), `{NAME}` display name, `{B64:x}` base64 of x.'),
     platforms: z.array(platform).optional(),
     note: text.optional(),
     src,
-}).strict();
+});
 
-export const CoreInfoSchema = z.object({ kind: z.enum(CORE_KINDS), version: text.optional(), note: text.optional(), src }).strict();
+export const CoreInfoSchema = z.object({ kind: z.enum(CORE_KINDS), version: text.optional(), note: text.optional(), src });
 
 export const CapabilitiesSchema = z.object({
     balancer: tri, observatory: tri, routing: tri, xhttp: tri, reality: tri, vision: tri, vlessEncryption: tri,
     hysteria2: tri, tuic: tri, wireguard: tri, anytls: tri, masque: tri, finalmask: tri, tun: tri,
-}).partial().strict();
+}).partial();
 
-export const NoteSchema = z.object({ text, src }).strict();
+export const NoteSchema = z.object({ text, src });
 
 /**
  * A format the app only takes from some version on. A request whose UA does
@@ -93,13 +98,13 @@ export const TypeGateSchema = z.object({
     severity: z.enum(['error', 'warning']),
     note: text,
     src,
-}).strict();
+});
 
 /** A download link a subscription page's install step gets. Store pages are never guessed. */
 export const DownloadLinkSchema = z.object({
     label: text,
     url: z.url({ protocol: /^https$/ }),
-}).strict();
+});
 
 export const ClientAppSchema = z.object({
     id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/, 'lowercase letters, digits and dashes; the file is clients/apps/<id>.json'),
@@ -119,7 +124,7 @@ export const ClientAppSchema = z.object({
         date: z.string(),
         platform: z.array(platform).optional(),
         channel: z.enum(['stable', 'pre']).optional(),
-    }).strict()),
+    })),
     cores: z.array(CoreInfoSchema),
     uaPatterns: z.array(UaPatternSchema),
     uaOverridable: z.enum(['no', 'global', 'per-subscription', 'global+per-subscription', 'provider-header', 'unknown']),
@@ -137,7 +142,7 @@ export const ClientAppSchema = z.object({
     limits: z.array(NoteSchema),
     pitfalls: z.array(NoteSchema),
     sources: z.record(text, SourceSchema),
-}).strict();
+});
 
 /** A file in clients/apps: an app, plus the `$schema` line that gives an editor completion. */
 export const ClientAppFileSchema = ClientAppSchema.extend({ $schema: z.string().optional() });
@@ -147,12 +152,67 @@ export const ClientAppFileSchema = ClientAppSchema.extend({ $schema: z.string().
  * editor's recommended Response Rules give it (Remnawave's matcher at 3.4.7).
  * `note` says when part of it is illustrative rather than captured.
  */
-export const UaSampleSchema = z.object({ ua: text, app: text, expected: templateType, note: text.optional() }).strict();
+export const UaSampleSchema = z.object({ ua: text, app: text, expected: templateType, note: text.optional() });
 
 /** An SVG logo: one <svg> root and nothing that runs. */
 export const SvgSchema = text
     .refine(value => /^\s*<svg[\s>]/i.test(value) && /<\/svg>\s*$/i.test(value), 'not a single <svg> element')
     .refine(value => !/<script|<foreignObject|\son[a-z]+\s*=|javascript:/i.test(value), 'contains something that runs');
+
+// ─── Response Rules blueprints (rules/) ────────────────────────────────────
+
+/** A Remnawave Response Rule condition (remnawave/backend@3.4.7 response-rules contract). */
+export const RuleConditionSchema = z.object({
+    headerName: text,
+    operator: z.enum(['EQUALS', 'NOT_EQUALS', 'CONTAINS', 'NOT_CONTAINS', 'STARTS_WITH', 'NOT_STARTS_WITH', 'ENDS_WITH', 'NOT_ENDS_WITH', 'REGEX', 'NOT_REGEX']),
+    value: text,
+    caseSensitive: z.boolean(),
+});
+
+/**
+ * One rule "Generate from KB" writes, in panel order (most specific first).
+ * It is generated when at least one of `apps` is targeted; `optional` rules
+ * are opt-in. `device` adds the phone host exclusion (and on iOS the
+ * no-limit header).
+ */
+export const RuleBlueprintSchema = z.object({
+    key: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+    name: text,
+    description: text,
+    apps: z.array(text),
+    regex: regex.optional().describe('A user-agent REGEX with caseSensitive: false; lowercase-safe like every KB regex.'),
+    conditions: z.array(RuleConditionSchema).min(1).optional(),
+    type: templateType,
+    device: z.enum(['ios', 'android']).optional(),
+    optional: z.string().regex(/^[a-z0-9][a-z0-9-]*$/).optional().describe('The key of an opt-in switch; the rule is off unless it is turned on.'),
+}).refine(rule => (rule.regex === undefined) !== (rule.conditions === undefined), 'exactly one of regex and conditions');
+
+// ─── Geo files (geo/) ─────────────────────────────────────────────────────
+
+/** Hosts a geo file may come from: each answers a page with Access-Control-Allow-Origin: *. */
+export const GEO_HOSTS = ['cdn.jsdelivr.net', 'raw.githubusercontent.com'] as const;
+const geoUrl = z.url({ protocol: /^https$/ }).refine(url => (GEO_HOSTS as readonly string[]).includes(new URL(url).hostname), `host must be one of ${GEO_HOSTS.join(', ')} (they send Access-Control-Allow-Origin: *)`);
+export const GeoFileSchema = z.object({ url: geoUrl, sizeMb: z.number().positive() });
+
+/**
+ * Where a page gets geoip / geosite lists: the real-core check (`check`,
+ * which needs both files) and the list viewer (`viewer`). jsDelivr refuses
+ * files over 50 MB; take those from raw.githubusercontent.com.
+ */
+export const GeoSourceSchema = z.object({
+    id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+    name: text,
+    home: z.url({ protocol: /^https$/ }),
+    note: text.optional(),
+    files: z.object({ geoip: GeoFileSchema.optional(), geosite: GeoFileSchema.optional() }),
+    uses: z.array(z.enum(['check', 'viewer'])).min(1),
+    viewerDefault: z.boolean().optional(),
+});
+
+// ─── Subscription page (subpage/) ─────────────────────────────────────────
+
+/** A text in each language it has; `en` is required, other locales start as a copy of it. */
+export const LocalizedTextSchema = z.record(z.string().regex(/^[a-z]{2}$/), text).refine(value => 'en' in value, 'needs en');
 
 /** The current format of the published document. A change the editor cannot read raises it. */
 export const DATA_FORMAT = 1;
@@ -170,10 +230,20 @@ export const XcuiDataSchema = z.object({
         notation: z.array(text),
         /** Translations of the KB's English texts, by language, keyed by the English. */
         i18n: z.record(text, z.record(text, text)),
-    }).strict(),
+    }),
     /** SVG logos by library key. */
     icons: z.record(text, SvgSchema),
-}).strict();
+    rules: z.object({
+        blueprints: z.array(RuleBlueprintSchema),
+        /** Translations of the blueprints' descriptions, by language, keyed by the English. */
+        i18n: z.record(text, z.record(text, text)),
+    }),
+    geo: z.object({ sources: z.array(GeoSourceSchema) }),
+    subpage: z.object({
+        /** The page's base translation texts (keys are Remnawave's; the editor checks it knows each one). */
+        baseTexts: z.record(text, LocalizedTextSchema),
+    }),
+});
 
 export type TemplateType = (typeof TEMPLATE_TYPES)[number];
 export type Platform = (typeof PLATFORMS)[number];
@@ -193,4 +263,9 @@ export type TypeGate = z.infer<typeof TypeGateSchema>;
 export type DownloadLink = z.infer<typeof DownloadLinkSchema>;
 export type ClientApp = z.infer<typeof ClientAppSchema>;
 export type UaSample = z.infer<typeof UaSampleSchema>;
+export type RuleCondition = z.infer<typeof RuleConditionSchema>;
+export type RuleBlueprint = z.infer<typeof RuleBlueprintSchema>;
+export type GeoFile = z.infer<typeof GeoFileSchema>;
+export type GeoSource = z.infer<typeof GeoSourceSchema>;
+export type LocalizedText = z.infer<typeof LocalizedTextSchema>;
 export type XcuiData = z.infer<typeof XcuiDataSchema>;

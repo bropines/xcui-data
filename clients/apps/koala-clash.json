@@ -17,11 +17,11 @@
     "macos": [
       {
         "label": "Apple Silicon",
-        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_aarch64.dmg"
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_arm64.pkg"
       },
       {
         "label": "Intel",
-        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_x64.dmg"
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_x64.pkg"
       }
     ],
     "linux": [

@@ -1,0 +1,151 @@
+[
+  {
+    "key": "links-header",
+    "name": "Links on request",
+    "optional": "links-header",
+    "apps": [],
+    "description": "Tools that send x-subscription-format: links get share links whatever their UA. Enable if your tooling uses it.",
+    "conditions": [
+      { "headerName": "x-subscription-format", "operator": "EQUALS", "value": "links", "caseSensitive": false }
+    ],
+    "type": "XRAY_BASE64"
+  },
+  {
+    "key": "happ-ios",
+    "name": "Happ iOS (Xray JSON, NE memory)",
+    "apps": ["happ"],
+    "device": "ios",
+    "description": "iOS Network Extension ~50 MB. no-limit-enabled is a beta Advanced parameter: it needs providerid (global header).",
+    "regex": "^happ/(?:[4-9]|[1-9]\\d)\\.[^/]*/ios",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "incy-ios",
+    "name": "INCY iOS (Xray JSON, NE memory)",
+    "apps": ["incy"],
+    "device": "ios",
+    "description": "INCY documents no-limit-enabled as an enable-only memory-tight NE mode.",
+    "regex": "^incy/[^/]+/ios",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "happ-incy-android",
+    "name": "Happ / INCY Android (Xray JSON, fewer hosts)",
+    "apps": ["happ", "incy"],
+    "device": "android",
+    "description": "Same host set as iOS for phones.",
+    "regex": "^(?:happ/(?:[4-9]|[1-9]\\d)\\.[^/]*|incy/[^/]+)/android",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "happ-incy",
+    "name": "Happ 4+ / INCY (Xray JSON)",
+    "apps": ["happ", "incy"],
+    "description": "Explicit, so it does not depend on serveJsonAtBaseSubscription.",
+    "regex": "^(?:incy/|happ/(?:[4-9]|[1-9]\\d)\\.)",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "throne",
+    "name": "Throne desktop 1.2+ / Android 2+ (Xray JSON array)",
+    "apps": ["throne-desktop", "throne-android"],
+    "description": "Each array element becomes a Custom Xray Config named from remarks. Older Throne: links.",
+    "regex": "^throne/(?:android/)?(?:[2-9]|[1-9]\\d+)(?:\\.|$)|^throne/1\\.(?:[2-9]|[1-9]\\d+)(?:\\.|$)",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "onexray",
+    "name": "OneXray (Xray JSON)",
+    "apps": ["onexray"],
+    "description": "UA starts with v2rayN/ on purpose: must stay above the v2rayN rule.",
+    "regex": "^v2rayn/[\\d.]+ onexray/",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "v2rayng",
+    "name": "v2rayNG 1.8.29+ (Xray JSON)",
+    "apps": ["v2rayng"],
+    "description": "Template must contain a routing key, or v2rayNG does not take it as a full config.",
+    "regex": "^v2rayng/(?:1\\.(?:8\\.(?:29|[3-9]\\d|\\d{3,})|9\\.|\\d{2,}\\.)|[2-9]\\.|\\d{2,}\\.)",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "v2rayn",
+    "name": "v2rayN 6.40+ (Xray JSON)",
+    "apps": ["v2rayn"],
+    "description": "3-part version and nothing after it: excludes Passwall2's default v2rayN/9.99.",
+    "regex": "^v2rayn/(?:6\\.(?:[4-9]\\d|\\d{3,})|[7-9]\\.\\d+|[1-9]\\d\\.\\d+)\\.\\d+$",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "xray-json-other",
+    "name": "Other Xray JSON clients",
+    "apps": ["streisand", "v2box", "wrabbit", "v2plus"],
+    "description": "Streisand, V2Box (Remnawave: all versions), Wrabbit (operator-observed), v2plus.",
+    "regex": "^(?:streisand|v2box|wrabbit|v2plus/)",
+    "type": "XRAY_JSON"
+  },
+  {
+    "key": "gui-for-singbox",
+    "name": "GUI.for.SingBox default UA",
+    "apps": ["gui-for-singbox"],
+    "description": "Sends exactly clash.meta/mihomo by default but only reads sing-box JSON outbounds.",
+    "regex": "^clash\\.meta/mihomo$",
+    "type": "SINGBOX"
+  },
+  {
+    "key": "mihomo",
+    "name": "Mihomo Clients",
+    "apps": [
+      "mihomo-core",
+      "clash-verge-rev",
+      "flclash",
+      "flclashx",
+      "clash-party",
+      "clash-nyanpasu",
+      "koala-clash",
+      "prizrak-box",
+      "flowvy",
+      "cmfa",
+      "clashx-meta",
+      "clash-mi",
+      "rabbithole"
+    ],
+    "description": "Must stay above ^clash, or these get CLASH and lose XHTTP. Adds ClashX Meta (%20) and Clash Mi to the default.",
+    "regex": "^(?:flclash|flowvy|murge|mihomo|prizrak-box|koala-clash|rabbit|clash(?:-verge|-nyanpasu|x(?: |%20)meta|[-.]?meta|mi/))",
+    "type": "MIHOMO"
+  },
+  {
+    "key": "stash",
+    "name": "Stash (iOS, macOS)",
+    "apps": ["stash"],
+    "description": "Response with generated YAML config (Stash Template)",
+    "regex": "^stash",
+    "type": "STASH"
+  },
+  {
+    "key": "singbox",
+    "name": "Sing-box clients",
+    "apps": ["sfa", "sf-apple", "sf-desktop", "deskbox", "karing", "gui-for-singbox"],
+    "description": "SFA/SFI/SFM/SFT plus SFW/SFL (desktop, 1.14) and bare SFM (DeskBox); karing anywhere. Hiddify and husi are deliberately not here: they are better with links.",
+    "regex": "^sf[aimtwl](?:$|[ /])|singbox|karing",
+    "type": "SINGBOX"
+  },
+  {
+    "key": "clash",
+    "name": "Clash Core Clients",
+    "apps": ["murge"],
+    "description": "Whatever is left that starts with clash: ClashforWindows (also Murge), legacy builds.",
+    "regex": "^clash",
+    "type": "CLASH"
+  },
+  {
+    "key": "v2raytun-json",
+    "name": "v2RayTun (Xray JSON, opt-in)",
+    "apps": ["v2raytun"],
+    "optional": "v2raytun-json",
+    "description": "Release notes mention JSON with balancers; unverified. No version in the UA, so no gate.",
+    "regex": "^v2raytun/",
+    "type": "XRAY_JSON"
+  }
+]

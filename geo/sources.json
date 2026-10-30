@@ -1,0 +1,52 @@
+[
+  {
+    "id": "xtls",
+    "name": "XTLS/Xray-rules-dat",
+    "home": "https://github.com/XTLS/Xray-rules-dat",
+    "files": {
+      "geoip": { "url": "https://cdn.jsdelivr.net/gh/XTLS/Xray-rules-dat@release/geoip/geoip-lite.dat", "sizeMb": 4 },
+      "geosite": { "url": "https://cdn.jsdelivr.net/gh/XTLS/Xray-rules-dat@release/geosite/geosite.dat", "sizeMb": 7.6 }
+    },
+    "uses": ["check", "viewer"]
+  },
+  {
+    "id": "loyalsoldier",
+    "name": "Loyalsoldier/v2ray-rules-dat",
+    "home": "https://github.com/Loyalsoldier/v2ray-rules-dat",
+    "files": {
+      "geoip": { "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat", "sizeMb": 16.6 },
+      "geosite": {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat",
+        "sizeMb": 11.3
+      }
+    },
+    "uses": ["check", "viewer"]
+  },
+  {
+    "id": "runetfreedom",
+    "name": "runetfreedom/russia-v2ray-rules-dat",
+    "home": "https://github.com/runetfreedom/russia-v2ray-rules-dat",
+    "files": {
+      "geoip": {
+        "url": "https://cdn.jsdelivr.net/gh/runetfreedom/russia-v2ray-rules-dat@release/geoip.dat",
+        "sizeMb": 18
+      },
+      "geosite": {
+        "url": "https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geosite.dat",
+        "sizeMb": 73.7
+      }
+    },
+    "uses": ["check", "viewer"]
+  },
+  {
+    "id": "v2fly",
+    "name": "v2fly",
+    "home": "https://github.com/v2fly/geoip",
+    "files": {
+      "geoip": { "url": "https://cdn.jsdelivr.net/gh/v2fly/geoip@release/geoip.dat", "sizeMb": 23.3 },
+      "geosite": { "url": "https://cdn.jsdelivr.net/gh/v2fly/domain-list-community@release/dlc.dat", "sizeMb": 2.4 }
+    },
+    "uses": ["check", "viewer"],
+    "viewerDefault": true
+  }
+]
