@@ -142,8 +142,12 @@ export const ClientAppSchema = z.object({
 /** A file in clients/apps: an app, plus the `$schema` line that gives an editor completion. */
 export const ClientAppFileSchema = ClientAppSchema.extend({ $schema: z.string().optional() });
 
-/** A User-Agent seen in the wild, the app that sends it, and what the recommended rules give it. */
-export const UaSampleSchema = z.object({ ua: text, app: text, expected: templateType.optional() }).strict();
+/**
+ * A User-Agent seen in the wild, the app that sends it, and what the
+ * editor's recommended Response Rules give it (Remnawave's matcher at 3.4.7).
+ * `note` says when part of it is illustrative rather than captured.
+ */
+export const UaSampleSchema = z.object({ ua: text, app: text, expected: templateType, note: text.optional() }).strict();
 
 /** An SVG logo: one <svg> root and nothing that runs. */
 export const SvgSchema = text

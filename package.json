@@ -1,6 +1,6 @@
 {
   "name": "xcui-data",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The data the Xray Config UI Editor reads — client apps (User-Agents, formats, deep links, download links, logos) — as plain JSON, checked by CI and published to GitHub Pages.",
   "license": "MIT",
   "author": "bropines",
