@@ -28,6 +28,8 @@ jobs:
         run: bun run check
       - name: Tests
         run: bun test
+      - name: Bypass lists keep their published versions
+        run: bun scripts/check-history.ts
       - name: Typecheck
         run: bun run typecheck
       - name: Build and pack

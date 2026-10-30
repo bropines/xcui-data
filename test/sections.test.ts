@@ -95,3 +95,34 @@ describe('unknownKeys', () => {
             .toEqual(['b.typo', 'list.0.extra']);
     });
 });
+
+describe('bypass lists', () => {
+    const lists = data.bypass.lists;
+
+    it('have unique ids and no entry in two lists', () => {
+        expect(new Set(lists.map(l => l.id)).size).toBe(lists.length);
+        const seen = new Map<string, string>();
+        const twice: string[] = [];
+        for (const list of lists) for (const entry of list.domains) {
+            if (seen.has(entry)) twice.push(`${entry}: ${seen.get(entry)} and ${list.id}`);
+            seen.set(entry, list.id);
+        }
+        expect(twice).toEqual([]);
+    });
+
+    it('have English and Russian words, and no repeated entry or earlier version', () => {
+        for (const list of lists) {
+            expect(list.label.ru && list.description.ru).toBeTruthy();
+            expect(new Set(list.domains).size).toBe(list.domains.length);
+            const versions = [list.domains, ...list.previous].map(v => JSON.stringify(v));
+            expect(new Set(versions).size).toBe(versions.length);
+        }
+    });
+
+    it('take only entries that name a site or a whole zone', async () => {
+        const { BypassEntrySchema } = await import('../src/schema');
+        const ok = (value: string) => BypassEntrySchema.safeParse(value).success;
+        for (const good of ['domain:yandex.ru', 'full:checkip.amazonaws.com', 'domain:кц.рф', 'regexp:.+\\.ru$', 'regexp:.+\\.рф$']) expect([good, ok(good)]).toEqual([good, true]);
+        for (const bad of ['keyword:ru', 'regexp:.*', 'regexp:.+ru$', 'regexp:^.*$', 'regexp:.+.ru$', 'domain:ru', 'domain:Yandex.ru', '1.1.1.1', 'geosite:ru', 'domain:yandex.ru ', 'full:*.ru', 'regexp:.+\\.ru']) expect([bad, ok(bad)]).toEqual([bad, false]);
+    });
+});

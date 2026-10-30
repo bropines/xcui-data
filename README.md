@@ -19,6 +19,7 @@ The data the [Xray Config UI Editor](https://github.com/bropines/xray-config-ui-
 | `rules/blueprints.json`, `rules/i18n/<lang>.json` | the Response Rules "Generate from KB" writes (panel order) and their descriptions' translations |
 | `geo/sources.json` | where a page gets geoip / geosite lists (`check`: the real-core check, `viewer`: the list viewer) |
 | `subpage/base-texts.json` | a subscription page's base translation texts |
+| `bypass/lists.json` | the lists a config's "send these straight out" rule is built from |
 | `icons/<key>.svg` | logos for apps Remnawave's default page has none for |
 
 A weekly run (`bun run links`) checks that every geo file still answers a page and is about its stated size, and that every download link answers.
@@ -51,6 +52,12 @@ What else to know:
 2. Add `<id>` to `clients/order.json` where the editor should list it.
 3. Add a User-Agent the app really sends to `clients/samples.json`.
 4. Add Russian words for its texts to `clients/i18n/ru.json` (CI names every missing one).
+
+### Bypass lists
+
+What a bypass list holds goes, unproxied, into the routing and DNS of every config built with it, on clients and on every subscriber's app. So an entry is only `domain:<name>`, `full:<name>` (lowercase, with a dot) or `regexp:.+\.<zone>$` — never `keyword:`, a broad regex or an address; the schema refuses anything else.
+
+A list may change, but never by forgetting what it was: a config written with a list is recognised later only when it holds a whole version of it. When you change `domains`, put the old list first in `previous` (newest first). CI compares with what is published and fails otherwise (`scripts/check-history.ts`); a list is never removed.
 
 ### Texts and translations
 

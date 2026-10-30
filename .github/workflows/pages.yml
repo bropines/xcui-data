@@ -33,6 +33,7 @@ jobs:
       # The same gate as CI: nothing that fails it is published.
       - run: bun run check
       - run: bun test
+      - run: bun scripts/check-history.ts
       - name: Build the site
         run: bun scripts/build.ts --site site
       - uses: actions/configure-pages@v5

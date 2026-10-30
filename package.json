@@ -1,7 +1,7 @@
 {
   "name": "xcui-data",
-  "version": "0.2.0",
-  "description": "The data the Xray Config UI Editor reads — client apps (User-Agents, formats, deep links, downloads, logos), Response Rules blueprints, geo file sources, subscription page texts — as plain JSON, checked by CI and published to GitHub Pages.",
+  "version": "0.3.0",
+  "description": "The data the Xray Config UI Editor reads — client apps (User-Agents, formats, deep links, downloads, logos), Response Rules blueprints, geo file sources, bypass lists, subscription page texts — as plain JSON, checked by CI and published to GitHub Pages.",
   "license": "MIT",
   "author": "bropines",
   "homepage": "https://github.com/bropines/xcui-data#readme",

@@ -13,13 +13,14 @@
  *   rules/i18n/<lang>.json    translations of their descriptions
  *   geo/sources.json          where a page gets geoip / geosite lists
  *   subpage/base-texts.json   a subscription page's base translation texts
+ *   bypass/lists.json         the lists a config's "straight out" rule is built from
  */
 import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod';
 import {
-    ClientAppFileSchema, DATA_FORMAT, GeoSourceSchema, LocalizedTextSchema, RuleBlueprintSchema, UaSampleSchema, XcuiDataSchema,
+    BypassListSchema, ClientAppFileSchema, DATA_FORMAT, GeoSourceSchema, LocalizedTextSchema, RuleBlueprintSchema, UaSampleSchema, XcuiDataSchema,
     type ClientApp, type XcuiData,
 } from './schema';
 
@@ -115,6 +116,7 @@ export const readSource = (root: string, options: ReadOptions = {}): XcuiData =>
     const blueprints = check('rules/blueprints.json', z.array(RuleBlueprintSchema), readJson(join(root, 'rules', 'blueprints.json'), problems), problems) ?? [];
     const rulesI18n = readDict(join(root, 'rules', 'i18n'), 'rules/i18n', problems);
     const geoSources = check('geo/sources.json', z.array(GeoSourceSchema), readJson(join(root, 'geo', 'sources.json'), problems), problems) ?? [];
+    const bypassLists = check('bypass/lists.json', z.array(BypassListSchema), readJson(join(root, 'bypass', 'lists.json'), problems), problems) ?? [];
     const baseTexts = check('subpage/base-texts.json', z.record(z.string(), LocalizedTextSchema), readJson(join(root, 'subpage', 'base-texts.json'), problems), problems) ?? {};
 
     const content = {
@@ -122,6 +124,7 @@ export const readSource = (root: string, options: ReadOptions = {}): XcuiData =>
         icons,
         rules: { blueprints, i18n: rulesI18n },
         geo: { sources: geoSources },
+        bypass: { lists: bypassLists },
         subpage: { baseTexts },
     };
     const id = createHash('sha256').update(JSON.stringify(content)).digest('hex').slice(0, 16);

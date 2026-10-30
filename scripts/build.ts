@@ -40,7 +40,7 @@ const sourceFiles = (): string[] => {
             else if (entry.name.endsWith('.json')) out.push(path);
         }
     };
-    for (const dir of ['clients', 'rules', 'geo', 'subpage']) walk(join(root, dir));
+    for (const dir of ['clients', 'rules', 'geo', 'subpage', 'bypass']) walk(join(root, dir));
     return out.sort();
 };
 

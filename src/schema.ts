@@ -214,6 +214,38 @@ export const GeoSourceSchema = z.object({
 /** A text in each language it has; `en` is required, other locales start as a copy of it. */
 export const LocalizedTextSchema = z.record(z.string().regex(/^[a-z]{2}$/), text).refine(value => 'en' in value, 'needs en');
 
+// ─── Bypass lists (bypass/) ───────────────────────────────────────────────
+
+/**
+ * One entry of a bypass list: what goes, unproxied, into the routing and DNS
+ * of every config built with the list — on clients and on every subscriber's
+ * app. So only what names a site exactly: `domain:` (the domain and its
+ * subdomains) or `full:` (exactly that name), and a `regexp:` only as a whole
+ * top-level zone (`regexp:.+\.ru$`). Never `keyword:`, never a bare regex,
+ * never an address: one broad entry would send everyone's traffic around the
+ * tunnel and show their real IP.
+ */
+export const BypassEntrySchema = z.string().refine(
+    value => /^(?:domain|full):(?:[\p{Ll}\p{Lo}0-9-]+\.)+[\p{Ll}\p{Lo}0-9-]+$/u.test(value) || /^regexp:\.\+\\\.[\p{Ll}\p{Lo}0-9-]+\$$/u.test(value),
+    'a bypass entry must be domain:<name>, full:<name> (lowercase, with a dot) or regexp:.+\\.<zone>$',
+);
+
+/**
+ * A list a config's "send these straight out" rule is built from. `previous`
+ * keeps every earlier version, newest first, because a config or template
+ * written with one is recognised only when it holds a whole version: drop
+ * one, and every config built with it shows the list as switched off. CI
+ * refuses a change to `domains` that does not move the published version
+ * into `previous` (scripts/check-history.ts).
+ */
+export const BypassListSchema = z.object({
+    id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+    label: LocalizedTextSchema,
+    description: LocalizedTextSchema,
+    domains: z.array(BypassEntrySchema).min(1).max(500),
+    previous: z.array(z.array(BypassEntrySchema).min(1).max(500)),
+});
+
 /** The current format of the published document. A change the editor cannot read raises it. */
 export const DATA_FORMAT = 1;
 
@@ -239,6 +271,7 @@ export const XcuiDataSchema = z.object({
         i18n: z.record(text, z.record(text, text)),
     }),
     geo: z.object({ sources: z.array(GeoSourceSchema) }),
+    bypass: z.object({ lists: z.array(BypassListSchema) }),
     subpage: z.object({
         /** The page's base translation texts (keys are Remnawave's; the editor checks it knows each one). */
         baseTexts: z.record(text, LocalizedTextSchema),
@@ -268,4 +301,5 @@ export type RuleBlueprint = z.infer<typeof RuleBlueprintSchema>;
 export type GeoFile = z.infer<typeof GeoFileSchema>;
 export type GeoSource = z.infer<typeof GeoSourceSchema>;
 export type LocalizedText = z.infer<typeof LocalizedTextSchema>;
+export type BypassList = z.infer<typeof BypassListSchema>;
 export type XcuiData = z.infer<typeof XcuiDataSchema>;

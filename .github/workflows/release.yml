@@ -29,6 +29,7 @@ jobs:
           fi
       - run: bun run check
       - run: bun test
+      - run: bun scripts/check-history.ts
       - run: bun run typecheck
       - name: Pack
         run: npm pack
