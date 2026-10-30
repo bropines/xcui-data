@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "sf-apple",
+  "name": "sing-box for Apple (SFI / SFM / SFT)",
+  "vendor": "SagerNet",
+  "family": "sing-box",
+  "platforms": ["ios", "macos", "tvos"],
+  "openSource": true,
+  "repo": "github.com/SagerNet/sing-box-for-apple",
+  "brandIcon": "Singbox",
+  "latest": [
+    { "version": "1.14.4", "date": "2026-10-24" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "same as app", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    { "platform": ["ios"], "regex": "^sfi[ /]", "example": "SFI (sing-box 1.14.4; language en_US)", "src": ["ua"] },
+    { "platform": ["macos"], "regex": "^sfm[ /]", "example": "SFM (sing-box 1.14.4; language ru_RU)", "src": ["ua"] },
+    { "platform": ["tvos"], "regex": "^sft[ /]", "example": "SFT (sing-box 1.14.4; language en_US)", "src": ["ua"] }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["SINGBOX"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "LibboxCheckConfig gate", "src": ["upd"] },
+  "capabilities": {
+    "xhttp": false,
+    "vlessEncryption": false,
+    "reality": true,
+    "vision": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["core"],
+  "headersRead": [],
+  "deepLinks": [
+    {
+      "template": "sing-box://import-remote-profile?url={URL_ENC}#{NAME}",
+      "note": "SFT scheme unverified",
+      "src": ["plist"]
+    }
+  ],
+  "limits": [
+    {
+      "text": "macOS is standalone only (no longer on the Mac App Store); iOS listing is \"sing-box MT\"",
+      "src": ["chg"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "Remnawave clients.ts still links the old \"sing-box VT\" listing", "src": ["rwc"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "SagerNet/sing-box-for-apple@0d1b59f:Library/Network/HTTPClient.swift:5-12; Library/Shared/Variant.swift:11-16",
+      "kind": "source"
+    },
+    "upd": {
+      "ref": "SagerNet/sing-box-for-apple@0d1b59f:Library/Database/Profile+Update.swift:11-14",
+      "kind": "source"
+    },
+    "plist": {
+      "ref": "SagerNet/sing-box-for-apple@0d1b59f:SFI/Info.plist:47-49; SFM/Info.plist:35-37",
+      "kind": "source"
+    },
+    "core": { "ref": "SagerNet/sing-box@v1.14.4:constant/v2ray.go:4-8", "kind": "source" },
+    "chg": { "ref": "SagerNet/sing-box@v1.14.4:docs/changelog.md (1.14.0)", "kind": "source" },
+    "rwc": { "ref": "remnawave/panel@f52f3ba:src/data/clients.ts:253", "kind": "remnawave" }
+  }
+}

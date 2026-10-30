@@ -1,0 +1,65 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "mihomo-core",
+  "name": "mihomo core (proxy-provider fetch)",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux", "android"],
+  "openSource": true,
+  "repo": "github.com/MetaCubeX/mihomo (branch Meta)",
+  "latest": [
+    { "version": "v1.19.33", "date": "2026-10-21" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.33", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clash\\.meta/",
+      "example": "clash.meta/v1.19.33",
+      "note": "alpha builds: clash.meta/alpha-<hash> (inferred)",
+      "src": ["ua", "ci"]
+    }
+  ],
+  "uaOverridable": "global+per-subscription",
+  "requestHeaders": [],
+  "accepts": ["MIHOMO", "XRAY_BASE64"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "provider bodies may be YAML or a link list", "src": ["conv"] },
+  "capabilities": {
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "masque": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["xhttp", "vless"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "format": "upload/download/total/expire (int or float)", "src": ["sub"] }
+  ],
+  "deepLinks": [],
+  "limits": [
+    { "text": "XHTTP since v1.19.22 (530c6b43, 2026-03-27); AnyTLS v1.19.3; MASQUE v1.19.20", "src": ["xhttp"] }
+  ],
+  "pitfalls": [
+    { "text": "the UA (via global-ua) shows only the core, not the app", "src": ["ua"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "MetaCubeX/mihomo@v1.19.33:config/config.go:446,504; component/http/http.go:54-55",
+      "kind": "source"
+    },
+    "ci": { "ref": "MetaCubeX/mihomo@v1.19.33:.github/workflows/build.yml:191-195", "kind": "source" },
+    "sub": {
+      "ref": "MetaCubeX/mihomo@v1.19.33:adapter/provider/provider.go:212; subscription_info.go",
+      "kind": "source"
+    },
+    "conv": { "ref": "MetaCubeX/mihomo@v1.19.33:common/convert", "kind": "source" },
+    "xhttp": { "ref": "MetaCubeX/mihomo compare v1.19.21...v1.19.22 (530c6b43)", "kind": "source" },
+    "vless": { "ref": "MetaCubeX/mihomo@v1.19.33:adapter/outbound/vless.go:71-136", "kind": "source" }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "flclashx",
+  "name": "FlClashX",
+  "family": "mihomo",
+  "platforms": ["android", "windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/pluralplay/FlClashX",
+  "brandIcon": "FlClashX",
+  "downloads": {
+    "android": [
+      {
+        "label": "APK",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-android-universal.apk"
+      }
+    ],
+    "windows": [
+      {
+        "label": "Windows (x64)",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-windows-amd64-setup.exe"
+      },
+      {
+        "label": "Windows on ARM",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-windows-arm64-setup.exe"
+      }
+    ],
+    "macos": [
+      {
+        "label": "Apple Silicon",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-macos-arm64.dmg"
+      },
+      {
+        "label": "Intel",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-macos-amd64.dmg"
+      }
+    ],
+    "linux": [
+      {
+        "label": "amd64 (.deb)",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-linux-amd64.deb"
+      },
+      {
+        "label": "amd64 (AppImage)",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-linux-amd64.AppImage"
+      },
+      {
+        "label": "arm64 (.deb)",
+        "url": "https://github.com/pluralplay/FlClashX/releases/latest/download/FlClashX-linux-arm64.deb"
+      }
+    ]
+  },
+  "latest": [
+    { "version": "v0.4.2", "date": "2026-07-18" },
+    { "version": "v0.5.0-pre.3", "date": "2026-10-28", "channel": "pre" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.28 (0.4.2)", "src": ["cv"] }
+  ],
+  "uaPatterns": [
+    {
+      "maxVersion": "0.4.x",
+      "regex": "^flclash x/",
+      "example": "FlClash X/v0.4.2 core/v1.19.28 Platform/android",
+      "src": ["ua4"]
+    },
+    {
+      "minVersion": "0.5.0",
+      "regex": "^flclashx/",
+      "example": "FlClashX/v0.5.0-pre.3 core/v1.19.33 Platform/linux",
+      "note": "core part inferred",
+      "src": ["ua5"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-on", "src": ["hw"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-on", "src": ["hw"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-on", "src": ["hw"] },
+    { "name": "x-device-model", "value": "model", "when": "default-on", "src": ["hw"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo; Remnawave extended client", "src": ["rwext"] },
+  "capabilities": { "xhttp": true, "reality": true, "vision": true, "hysteria2": true, "tun": true },
+  "capabilitiesSrc": ["cv"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["prof"] },
+    { "name": "content-disposition", "src": ["prof"] },
+    { "name": "announce", "format": "base64: ok", "src": ["prof"] },
+    { "name": "support-url", "src": ["prof"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["prof"] },
+    { "name": "x-hwid-max-devices-reached", "format": "true", "src": ["prof"] },
+    { "name": "x-hwid-not-supported", "format": "true", "src": ["prof"] },
+    {
+      "name": "flclashx-*",
+      "note": "servicename, servicelogo, serverinfo, view, widgets, settings, custom, hex, background, buyplan, buytraffic, newdomain, globalmode, override, …; see flclashx.app/#headers",
+      "src": ["prof"]
+    },
+    { "name": "profile-title", "since": "0.5.0", "format": "plain|base64:", "src": ["ph"] },
+    { "name": "profile-web-page-url", "since": "0.5.0", "src": ["ph"] }
+  ],
+  "deepLinks": [
+    { "template": "flclashx://install-config?url={URL_ENC}", "src": ["dl", "rwpage"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "0.4.x UA has a space (\"FlClash X\"); match ^flclash ?x/ or plain ^flclash", "src": ["ua4", "rwext"] },
+    { "text": "Android HWID = raw ANDROID_ID; desktop = SHA-256(machine id)[:16] uppercase", "src": ["hw"] }
+  ],
+  "sources": {
+    "ua4": {
+      "ref": "pluralplay/FlClashX@main(v0.4.2):lib/common/package.dart:10-14; lib/state.dart:162-168",
+      "kind": "source"
+    },
+    "ua5": { "ref": "pluralplay/FlClashX@v0.5.0-pre.3:lib/common/package.dart:13-17", "kind": "source" },
+    "cv": { "ref": "pluralplay/FlClashX@main:lib/core_version.dart:5", "kind": "source" },
+    "hw": {
+      "ref": "pluralplay/FlClashX@main:lib/utils/device_info_service.dart:36-161; lib/controller.dart:431",
+      "kind": "source"
+    },
+    "prof": {
+      "ref": "pluralplay/FlClashX@main:lib/models/profile.dart:174-230; controller.dart:499-510",
+      "kind": "source"
+    },
+    "ph": {
+      "ref": "pluralplay/FlClashX@v0.5.0-pre.3:lib/models/profile.dart:343-351; provider_headers.dart:28,195-211",
+      "kind": "source"
+    },
+    "dl": {
+      "ref": "pluralplay/FlClashX@main:AndroidManifest.xml:71-83; lib/common/window.dart:17-19",
+      "kind": "source"
+    },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:692",
+      "kind": "remnawave"
+    }
+  }
+}

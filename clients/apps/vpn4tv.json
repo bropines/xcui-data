@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "vpn4tv",
+  "name": "vpn4tv",
+  "family": "sing-box",
+  "platforms": ["androidtv"],
+  "openSource": true,
+  "repo": "github.com/VPN4TV/vpn4tv-native",
+  "brandIcon": "VpnForTV",
+  "downloads": {
+    "androidtv": [
+      { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.vpn4tv.hiddify" },
+      { "label": "APK", "url": "https://vpn4tv.com/download/vpn4tv.apk" }
+    ]
+  },
+  "latest": [
+    { "version": "v5.3.0", "date": "2026-10-23" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "sing-box-xhttp fork + embedded xray-core", "src": ["hw"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^vpn4tv-(?:native|desktop)/", "example": "VPN4TV-Native/5.3.0", "src": ["hw", "desktopUa"] }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "always", "src": ["hw"] },
+    { "name": "x-device-os", "value": "OS name", "when": "always", "src": ["hw"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "always", "src": ["hw"] },
+    { "name": "x-device-model", "value": "model", "when": "always", "src": ["hw"] },
+    { "name": "x-app-ver", "value": "version", "when": "always", "src": ["hw"] },
+    { "name": "x-app-build", "value": "build", "when": "always", "src": ["hw"] }
+  ],
+  "accepts": ["XRAY_BASE64", "SINGBOX"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "a sing-box JSON passes only if it has a tun inbound", "src": ["pp"] },
+  "capabilities": { "xhttp": true, "tun": true },
+  "capabilitiesSrc": ["hw"],
+  "headersRead": [
+    { "name": "profile-title", "format": "base64:", "src": ["hw"] },
+    { "name": "profile-update-interval", "src": ["hw"] },
+    { "name": "profile-web-page-url", "src": ["hw"] },
+    { "name": "support-url", "src": ["hw"] },
+    { "name": "subscription-userinfo", "src": ["hw"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "vpn4tv://…",
+      "note": "manifest: vpn, vpn4tv, wg, vless, vmess, trojan, hy2, ss; NOT hiddify://",
+      "src": ["man"]
+    }
+  ],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "Remnawave's default page offers hiddify://import/ for vpn4tv, which 5.x does not register (inferred)",
+      "src": ["man", "rwpage"]
+    }
+  ],
+  "sources": {
+    "hw": {
+      "ref": "VPN4TV/vpn4tv-native@v5.3.0:app/src/main/java/com/vpn4tv/app/converter/HwidService.kt:67-159",
+      "kind": "source"
+    },
+    "pp": { "ref": "VPN4TV/vpn4tv-native@v5.3.0:converter/ProxyParser.kt:209-249", "kind": "source" },
+    "man": { "ref": "VPN4TV/vpn4tv-native@v5.3.0:AndroidManifest.xml:63-71", "kind": "source" },
+    "desktopUa": { "ref": "VPN4TV/vpn4tv-desktop@af4cd5f:src/main/vpn4tv/onboarding.ts:40", "kind": "source" },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:3122",
+      "kind": "remnawave"
+    }
+  }
+}

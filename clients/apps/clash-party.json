@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "clash-party",
+  "name": "Clash Party (ex Mihomo Party)",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/mihomo-party-org/clash-party",
+  "latest": [
+    { "version": "v2.0.4", "date": "2026-10-18" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "stable | alpha | mihomo-smart", "src": ["prep"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^mihomo\\.party/", "example": "mihomo.party/v2.0.4 (clash.meta)", "src": ["ua"] }
+  ],
+  "uaOverridable": "global+per-subscription",
+  "requestHeaders": [
+    { "name": "Accept-Encoding", "value": "identity", "when": "always", "src": ["ua"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo core", "src": ["prep"] },
+  "capabilities": { "xhttp": true, "reality": true, "vision": true, "hysteria2": true, "tuic": true, "tun": true },
+  "capabilitiesSrc": ["prep"],
+  "headersRead": [
+    { "name": "content-disposition", "note": "only while name is \"Remote File\"", "src": ["prof"] },
+    { "name": "profile-web-page-url", "src": ["prof"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["prof"] },
+    { "name": "subscription-userinfo", "src": ["prof"] }
+  ],
+  "deepLinks": [
+    { "template": "mihomo://install-config?url={URL_ENC}&name={NAME}", "note": "clash:// too", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [],
+  "sources": {
+    "ua": { "ref": "mihomo-party-org/clash-party@v2.0.4:src/main/config/profile.ts:426-429,571", "kind": "source" },
+    "prof": { "ref": "mihomo-party-org/clash-party@v2.0.4:src/main/config/profile.ts:604-617", "kind": "source" },
+    "dl": {
+      "ref": "mihomo-party-org/clash-party@v2.0.4:electron-builder.yml:23-27; src/main/deeplink.ts:20-23",
+      "kind": "source"
+    },
+    "prep": { "ref": "mihomo-party-org/clash-party@v2.0.4:scripts/prepare.mjs:60-93", "kind": "source" }
+  }
+}

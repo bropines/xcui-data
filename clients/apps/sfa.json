@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "sfa",
+  "name": "sing-box for Android (SFA)",
+  "vendor": "SagerNet",
+  "family": "sing-box",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/SagerNet/sing-box-for-android",
+  "brandIcon": "Singbox",
+  "latest": [
+    { "version": "1.14.4", "date": "2026-10-24" },
+    { "version": "1.15.0-alpha.13", "date": "2026-10-24", "channel": "pre" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "same as app", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    {
+      "minVersion": "1.13.20",
+      "regex": "^sfa \\(sing-box ",
+      "example": "SFA (sing-box 1.14.4; language en_US)",
+      "src": ["ua"]
+    },
+    {
+      "maxVersion": "1.13.19",
+      "regex": "^sfa/",
+      "example": "SFA/1.13.19 (590; sing-box 1.13.19; language zh_CN)",
+      "note": "version code illustrative",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["SINGBOX"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "the body must pass Libbox.checkConfig", "src": ["upd"] },
+  "capabilities": {
+    "xhttp": false,
+    "vlessEncryption": false,
+    "reality": true,
+    "vision": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["core"],
+  "headersRead": [],
+  "deepLinks": [
+    {
+      "template": "sing-box://import-remote-profile?url={URL_ENC}#{NAME}",
+      "note": "name = fragment, else host",
+      "src": ["dl"]
+    }
+  ],
+  "limits": [
+    {
+      "text": "legacy DNS server format removed in 1.14; new format from 1.12: gate templates on \"sing-box X.Y\"",
+      "src": ["dep"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "random curl/7.x UA if an embedder sets none", "src": ["lib"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "SagerNet/sing-box-for-android@a548a79:app/src/main/java/io/nekohasekai/sfa/utils/HTTPClient.kt:11-16 (unified in d2ee6831)",
+      "kind": "source"
+    },
+    "upd": { "ref": "SagerNet/sing-box-for-android@a548a79:bg/UpdateProfileWork.kt:78-79", "kind": "source" },
+    "dl": {
+      "ref": "SagerNet/sing-box@v1.14.4:experimental/libbox/remote_profile.go:23-40; SFA AndroidManifest.xml:75-76",
+      "kind": "source"
+    },
+    "lib": { "ref": "SagerNet/sing-box@v1.14.4:experimental/libbox/http.go:204-226", "kind": "source" },
+    "core": {
+      "ref": "SagerNet/sing-box@v1.14.4:constant/v2ray.go:4-8; option/vless.go:20-26; option/tls.go:125-135",
+      "kind": "source"
+    },
+    "dep": { "ref": "SagerNet/sing-box@v1.14.4:docs/deprecated.md:66-100", "kind": "source" }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "onexray",
+  "name": "OneXray",
+  "vendor": "YuanDevTeam",
+  "family": "xray",
+  "platforms": ["android", "ios", "macos", "windows", "linux"],
+  "openSource": true,
+  "repo": "github.com/YuanDevTeam/OneXray",
+  "brandIcon": "OneXray",
+  "latest": [
+    { "version": "v26.10.5", "date": "2026-10-23" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.21", "src": ["rel"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^v2rayn/[\\d.]+ onexray/",
+      "example": "v2rayN/26.10.5 OneXray/26.10.5 (net.yuandev.onexray; build:1; android)",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "random UUID v4", "when": "default-off", "src": ["hwid"] },
+    { "name": "X-Age-Public-Key", "value": "age recipient", "when": "opt-in", "src": ["model"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "panel=remnawave mode checks every config with the core and names it from remarks",
+    "src": ["reader"]
+  },
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["rel"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["svc"] },
+    { "name": "x-hwid-not-supported", "src": ["svc"] },
+    { "name": "x-hwid-max-devices-reached", "src": ["svc"] },
+    { "name": "x-hwid-limit", "src": ["svc"] }
+  ],
+  "deepLinks": [
+    { "template": "onexray://onexray.com/sub/add?url={URL_ENC}&panel=remnawave#{NAME}", "src": ["dl"] }
+  ],
+  "limits": [
+    { "text": "RemnawaveAdapter adds a tun inbound, direct/block outbounds and its own DNS", "src": ["adapter"] },
+    { "text": "HTTPS only; x-hwid dropped on a cross-origin redirect", "src": ["ua"] }
+  ],
+  "pitfalls": [
+    {
+      "text": "starts with \"v2rayN/\" on purpose: put its rule before any ^v2rayN/ rule; version gates see v2rayN 26.x",
+      "src": ["ua"]
+    },
+    { "text": "with panel=remnawave, a non-JSON body raises RemnawaveResponseFormatException", "src": ["reader"] }
+  ],
+  "sources": {
+    "ua": { "ref": "YuanDevTeam/OneXray@v26.10.5:lib/core/network/client.dart:44-58,133", "kind": "source" },
+    "model": { "ref": "YuanDevTeam/OneXray@v26.10.5:lib/core/network/model.dart:8-19", "kind": "source" },
+    "hwid": {
+      "ref": "YuanDevTeam/OneXray@v26.10.5:lib/core/db/table/subscription.dart:17-18; service/servers/subscription/service.dart:144",
+      "kind": "source"
+    },
+    "reader": {
+      "ref": "YuanDevTeam/OneXray@v26.10.5:service/servers/subscription/reader.dart:79-158",
+      "kind": "source"
+    },
+    "adapter": { "ref": "YuanDevTeam/OneXray@v26.10.5:service/shared/xray/remnawave.dart", "kind": "source" },
+    "svc": {
+      "ref": "YuanDevTeam/OneXray@v26.10.5:service/servers/subscription/service.dart:679,731-744",
+      "kind": "source"
+    },
+    "dl": { "ref": "YuanDevTeam/OneXray@v26.10.5:service/shared/share/app_link_parser.dart:11-80", "kind": "source" },
+    "rel": { "ref": "YuanDevTeam/OneXray release v26.10.5 notes", "kind": "release-notes" }
+  }
+}

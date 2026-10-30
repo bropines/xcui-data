@@ -1,0 +1,46 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "exclave",
+  "name": "Exclave",
+  "family": "xray",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/dyhkwong/Exclave",
+  "brandIcon": "Exclave",
+  "latest": [
+    { "version": "0.17.66", "date": "2026-10-26" }
+  ],
+  "cores": [
+    { "kind": "v2ray5", "version": "exclave-core/v5 fork", "src": ["gomod"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^exclave/", "example": "Exclave/0.17.66", "src": ["ua"] }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64", "SINGBOX"],
+  "best": "XRAY_BASE64",
+  "bestWhy": {
+    "text": "a JSON array of full configs is flattened into separate outbounds (balancers lost)",
+    "src": ["raw"]
+  },
+  "capabilities": { "balancer": false, "xhttp": "unknown" },
+  "capabilitiesSrc": ["raw"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["raw"] }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "exclave://subscription?url= is handled in code but no manifest filter registers the scheme",
+      "src": ["dl"]
+    }
+  ],
+  "sources": {
+    "ua": { "ref": "dyhkwong/Exclave@0.17.66:ktx/Nets.kt:190", "kind": "source" },
+    "raw": { "ref": "dyhkwong/Exclave@0.17.66:group/RawUpdater.kt:76-110,295-314", "kind": "source" },
+    "dl": { "ref": "dyhkwong/Exclave@0.17.66:ui/MainActivity.kt:207; AndroidManifest.xml", "kind": "source" },
+    "gomod": { "ref": "dyhkwong/Exclave@0.17.66:library/core/go.mod", "kind": "source" }
+  }
+}

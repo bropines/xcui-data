@@ -1,0 +1,175 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "incy",
+  "name": "INCY",
+  "vendor": "LLC ITDEV",
+  "family": "xray",
+  "platforms": ["ios", "macos", "android", "windows", "linux", "tvos", "androidtv"],
+  "openSource": false,
+  "repo": "github.com/INCY-DEV/incy-docs (docs only)",
+  "brandIcon": "INCY",
+  "downloads": {
+    "ios": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/incy/id6756943388" }
+    ],
+    "macos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/incy/id6756943388" },
+      {
+        "label": "macOS (Apple silicon)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-macos-arm64.dmg"
+      },
+      {
+        "label": "macOS (Intel)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-macos-intel.dmg"
+      }
+    ],
+    "tvos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/incy/id6756943388" }
+    ],
+    "android": [
+      { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=llc.itdev.incy" },
+      { "label": "APK", "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/Incy.apk" }
+    ],
+    "androidtv": [
+      { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=llc.itdev.incy" },
+      { "label": "APK", "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/Incy.apk" }
+    ],
+    "windows": [
+      {
+        "label": "Windows",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-windows-setup.exe"
+      },
+      {
+        "label": "Windows (portable)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-windows-portable.zip"
+      }
+    ],
+    "linux": [
+      {
+        "label": ".deb (x64)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-linux-x64.deb"
+      },
+      {
+        "label": ".rpm (x64)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-linux-x64.rpm"
+      },
+      {
+        "label": "Arch (x64)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-linux-x64.pkg.tar.zst"
+      },
+      {
+        "label": ".deb (arm64)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-linux-arm64.deb"
+      },
+      {
+        "label": ".rpm (arm64)",
+        "url": "https://github.com/INCY-DEV/incy-platforms/releases/latest/download/incy-linux-arm64.rpm"
+      }
+    ]
+  },
+  "latest": [
+    { "version": "2.6.6", "date": "2026-10-27", "platform": ["ios", "macos"] },
+    { "version": "3.8.1", "date": "2026-10", "platform": ["android"] },
+    { "version": "3.9.0", "date": "2026-10", "platform": ["windows", "macos", "linux"] }
+  ],
+  "cores": [
+    { "kind": "xray", "src": ["fmt"] },
+    { "kind": "amneziawg", "version": "amneziawg-go v3.1", "note": "iOS/Android", "src": ["fmt"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^incy/",
+      "example": "INCY/3.8.1/android Dalvik/2.1.0 (Linux; U; Android 15)",
+      "note": "INCY/<ver>/<platform>; iOS appends CFNetwork/Darwin",
+      "src": ["fmt", "ua"]
+    },
+    {
+      "platform": ["ios"],
+      "regex": "^incy/[^/]+/ios",
+      "example": "INCY/2.6.6/ios CFNetwork/3860.100.1 Darwin/26.0.0",
+      "src": ["fmt", "op"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "unknown", "src": ["fmt", "hwid"] },
+    { "name": "x-device-os", "value": "OS name", "when": "unknown", "src": ["fmt", "hwid"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "unknown", "src": ["fmt", "hwid"] },
+    { "name": "x-device-model", "value": "model", "when": "unknown", "src": ["fmt", "hwid"] },
+    { "name": "X-Device-ID", "value": "HWID alias (Android)", "when": "unknown", "src": ["fmt"] },
+    { "name": "x-app-version", "value": "app version", "when": "always", "src": ["fmt"] },
+    { "name": "x-device-locale", "value": "locale", "when": "always", "src": ["fmt"] },
+    { "name": "x-client", "value": "INCY", "when": "always", "src": ["fmt"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "documents balancers and observatory in full configs; base64 cannot express balancers",
+    "src": ["full", "op"]
+  },
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true,
+    "tuic": false
+  },
+  "capabilitiesSrc": ["fmt", "full"],
+  "headersRead": [
+    { "name": "profile-title", "format": "plain|base64: (alt subscription-name, content-disposition)", "src": ["mgmt"] },
+    { "name": "subscription-userinfo", "note": "0 hides the block", "src": ["mgmt"] },
+    { "name": "profile-update-interval", "src": ["mgmt"] },
+    { "name": "support-url", "src": ["mgmt"] },
+    { "name": "profile-web-page-url", "note": "alias homepage", "src": ["mgmt"] },
+    { "name": "announce", "format": "≤200, base64: allowed", "src": ["mgmt"] },
+    { "name": "routing", "format": "base64 | link | off", "src": ["mgmt"] },
+    { "name": "autorouting", "format": "incy://autorouting/onadd/https://…", "src": ["mgmt"] },
+    {
+      "name": "no-limit-enabled",
+      "format": "1",
+      "note": "(iOS) keeps the NE under 50 MB so xhttp is not killed; enable-only",
+      "src": ["mgmt"]
+    },
+    { "name": "banner-text", "note": "+ banner-*, expiry-banner-*", "src": ["mgmt"] },
+    {
+      "name": "fragmentation-enable",
+      "note": "+ noises-*, server-address-resolve-*, per-app-proxy-* (Android)",
+      "src": ["mgmt"]
+    }
+  ],
+  "deepLinks": [
+    { "template": "incy://add/{URL}", "src": ["dl"] },
+    { "template": "incy://import/{data}", "src": ["dl"] },
+    { "template": "incy://crypt1/{b64url AES-256-GCM}", "note": "Remnawave key INCY_CRYPT1_LINK", "src": ["dl"] }
+  ],
+  "limits": [
+    { "text": "iOS NE 50 MB cap", "src": ["mgmt"] },
+    {
+      "text": "patches full configs: listen 127.0.0.1, adds mixed inbound 10808 if missing, overrides stats/log",
+      "src": ["full"]
+    }
+  ],
+  "pitfalls": [
+    {
+      "text": "a different vendor from Happ; the panel no longer rewrites happ:// routing to incy://, so global Happ headers reach INCY as-is",
+      "src": ["mgmt"]
+    },
+    { "text": "skips ssr://, tuic://, hysteria:// links", "src": ["fmt"] }
+  ],
+  "sources": {
+    "fmt": { "ref": "INCY-DEV/incy-docs:ru/dev-docs/subscription-format.en.md:400-420", "kind": "docs" },
+    "hwid": { "ref": "INCY-DEV/incy-docs:ru/dev-docs/hwid.en.md:7", "kind": "docs" },
+    "full": { "ref": "INCY-DEV/incy-docs:full-xray-config.en.md", "kind": "docs" },
+    "mgmt": { "ref": "INCY-DEV/incy-docs:app-management.en.md:178-222", "kind": "docs" },
+    "dl": { "ref": "INCY-DEV/incy-docs:deep-links.en.md", "kind": "docs" },
+    "ua": { "ref": "github.com/AuthFailed/CheckNet/issues/75", "kind": "third-party" },
+    "op": { "ref": "operator production Response Rules (private), 2026-10", "kind": "operator" }
+  }
+}

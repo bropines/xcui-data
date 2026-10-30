@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "streisand",
+  "name": "Streisand",
+  "vendor": "ARCADIA ODYSSEY INC.",
+  "family": "xray",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "brandIcon": "Streisand",
+  "downloads": {
+    "ios": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/streisand/id6450534064" }
+    ],
+    "macos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/streisand/id6450534064" }
+    ]
+  },
+  "latest": [
+    { "version": "1.6.77", "date": "2026-10-25" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.21", "note": "also SSH/TUIC, so more than Xray (inferred)", "src": ["store"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^streisand",
+      "example": "Streisand/1.6.77 CFNetwork/3860.100.1 Darwin/26.0.0",
+      "note": "exact format unverified",
+      "src": ["rwext", "fixture"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": { "text": "Remnawave lists Streisand as Xray-JSON-capable on all versions", "src": ["rwjson"] },
+  "capabilities": {
+    "reality": true,
+    "vision": "unknown",
+    "xhttp": "unknown",
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "balancer": "unknown"
+  },
+  "capabilitiesSrc": ["store"],
+  "headersRead": [],
+  "deepLinks": [
+    { "template": "streisand://import/{URL}#{NAME}", "src": ["rwpage"] }
+  ],
+  "limits": [
+    {
+      "text": "iOS Network Extension memory cap (applies to all iOS VPN apps; not measured for Streisand)",
+      "src": ["inf"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "response headers it reads are undocumented", "src": ["inf"] }
+  ],
+  "sources": {
+    "store": { "ref": "App Store id6450534064 notes 1.6.77; streisandapp.com/changelog", "kind": "release-notes" },
+    "fixture": {
+      "ref": "neoauroraproject/hmpanel spec fixture \"Streisand/1.0 CFNetwork/1410 Darwin/22.0.0\"",
+      "kind": "third-party"
+    },
+    "inf": { "ref": "no vendor docs found", "kind": "unverified" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    },
+    "rwjson": {
+      "ref": "remnawave/panel@f52f3ba:_panel-docs/help-articles/en/EDITOR_TEMPLATES_XRAY_JSON.md:5-12",
+      "kind": "remnawave"
+    },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:562",
+      "kind": "remnawave"
+    }
+  }
+}

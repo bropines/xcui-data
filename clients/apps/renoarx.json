@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "renoarx",
+  "name": "RenoarX",
+  "family": "xray",
+  "platforms": ["windows"],
+  "openSource": false,
+  "repo": "github.com/RonnyFX/RenoarX (README only)",
+  "latest": [
+    { "version": "v0.3.1", "date": "2026-07-28" }
+  ],
+  "cores": [
+    { "kind": "xray", "note": "xray tun, xray json with zero override", "src": ["readme"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^renoarx/", "example": "RenoarX/0.3.1", "note": "guess from third-party preset", "src": ["eg"] }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "?", "when": "unknown", "src": ["rwhwid"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": { "text": "README promises \"xray json with zero override\" (inferred)", "src": ["readme"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    {
+      "name": "renoarx-notification",
+      "format": "JSON or base64 (id, severity, title, message, actionText, actionUrl, expiresAt)",
+      "src": ["readme"]
+    }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [],
+  "sources": {
+    "readme": { "ref": "RonnyFX/RenoarX README", "kind": "docs" },
+    "eg": {
+      "ref": "third-party Remnawave preset ^(Happ|INCY|RenoarX)/ (eGames subscription_rules.sh)",
+      "kind": "third-party"
+    },
+    "rwhwid": { "ref": "remnawave/panel@f52f3ba:docs/features/hwid-device-limit.md:60-73", "kind": "remnawave" }
+  }
+}

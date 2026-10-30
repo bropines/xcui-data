@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "v2rayng",
+  "name": "v2rayNG",
+  "vendor": "2dust",
+  "family": "xray",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/2dust/v2rayNG",
+  "brandIcon": "VRayNG",
+  "latest": [
+    { "version": "2.3.11", "date": "2026-10-11" },
+    { "version": "2.3.14", "date": "2026-10-28", "channel": "pre" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.10 (2.3.11); v26.10.21 (2.3.14)", "src": ["core"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^v2rayng/", "example": "v2rayNG/2.3.11", "src": ["ua"] },
+    {
+      "minVersion": "1.8.29",
+      "regex": "^v2rayng/(?:1\\.(?:8\\.(?:29|[3-9]\\d|\\d{3,})|9\\.|\\d{2,}\\.)|[2-9]\\.|\\d{2,}\\.)",
+      "example": "v2rayNG/1.10.31",
+      "src": ["rwjson"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "(custom)", "value": "per-subscription JSON headers; no built-in HWID", "when": "opt-in", "src": ["sub"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "an array becomes one CUSTOM profile per element, named from remarks, run as-is",
+    "src": ["fmt"]
+  },
+  "gates": [
+    {
+      "type": "XRAY_JSON",
+      "minVersion": "1.8.29",
+      "regex": "^v2rayng/(?:1\\.(?:8\\.(?:29|[3-9]\\d|\\d{3,})|9\\.|\\d{2,}\\.)|[2-9]\\.|\\d{2,}\\.)",
+      "severity": "error",
+      "note": "Remnawave documents Xray JSON from v2rayNG 1.8.29",
+      "src": ["rwjson"]
+    }
+  ],
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["core", "run"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "since": "2.3.13", "src": ["hdr"] },
+    { "name": "profile-title", "format": "plain|base64:", "since": "2.3.13", "src": ["hdr"] },
+    { "name": "support-url", "since": "2.3.13", "note": "http/https/tg only", "src": ["hdr"] },
+    { "name": "profile-web-page-url", "since": "2.3.13", "src": ["hdr"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "v2rayng://install-config?url={URL_ENC}#{NAME}",
+      "note": "name= is ignored; the name comes from the fragment",
+      "src": ["dl"]
+    }
+  ],
+  "limits": [
+    {
+      "text": "a full JSON is detected only if the body contains the literal strings inbounds, outbounds AND routing",
+      "src": ["fmt"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "Remnawave's default page link uses ?name=… and loses the name", "src": ["dl", "rwpage"] },
+    { "text": "stable 2.3.11 reads no response headers", "src": ["hdr"] }
+  ],
+  "sources": {
+    "ua": { "ref": "2dust/v2rayNG@2.3.11:util/HttpUtil.kt:155", "kind": "source" },
+    "sub": { "ref": "2dust/v2rayNG@2.3.11:SubscriptionItem.kt:16; SubEditActivity.kt:221", "kind": "source" },
+    "fmt": { "ref": "2dust/v2rayNG@aa4b055:handler/AngConfigManager.kt:330-369; fmt/CustomFmt.kt:21", "kind": "source" },
+    "run": { "ref": "2dust/v2rayNG@aa4b055:core/CoreConfigManager.kt:89-127", "kind": "source" },
+    "hdr": {
+      "ref": "2dust/v2rayNG@aa4b055:handler/AngConfigManager.kt:496-501; SubscriptionInfoParser.kt:14-30",
+      "kind": "source"
+    },
+    "dl": { "ref": "2dust/v2rayNG@aa4b055:AndroidManifest.xml:199-201; AngConfigManager.kt:631", "kind": "source" },
+    "core": { "ref": "2dust/v2rayNG release notes 2.3.11/2.3.14 (AndroidLibXrayLite)", "kind": "release-notes" },
+    "rwjson": {
+      "ref": "remnawave/panel@f52f3ba:_panel-docs/help-articles/en/EDITOR_TEMPLATES_XRAY_JSON.md:5-12",
+      "kind": "remnawave"
+    },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:1982",
+      "kind": "remnawave"
+    }
+  }
+}

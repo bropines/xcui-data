@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "surge-family",
+  "name": "Loon / Quantumult X / Surge",
+  "family": "other",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "brandIcon": "Loon",
+  "latest": [
+    { "version": "Loon 3.5.2", "date": "2026-10-01" },
+    { "version": "QX 1.8.1", "date": "2026-10-07" },
+    { "version": "Surge 5.23.0", "date": "2026-10-12" }
+  ],
+  "cores": [
+    { "kind": "proprietary", "src": ["xb"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^(?:loon|quantumult(?:%20| |-)x|surge)",
+      "example": "Loon/3.5.2 CFNetwork/3860.100.1 Darwin/26.0.0",
+      "src": ["xb"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "no Remnawave type produces their native formats", "src": ["xb"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["xb"] }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [],
+  "sources": {
+    "xb": { "ref": "cedar2025/Xboard:app/Protocols/{Loon,QuantumultX,Surge}.php", "kind": "third-party" }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "v2raytun",
+  "name": "v2RayTun",
+  "vendor": "DATABRIDGES / LXST-CODE",
+  "family": "xray",
+  "platforms": ["android", "androidtv", "windows", "ios", "macos"],
+  "openSource": false,
+  "repo": "github.com/LXST-CODE/v2RayTun (releases)",
+  "brandIcon": "vrayTUN",
+  "latest": [
+    { "version": "5.26.83", "date": "2026-10-12", "platform": ["android", "androidtv"] },
+    { "version": "3.10.15", "date": "2026-10", "platform": ["windows"] }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "26.6.27 (5.25.79)", "src": ["rel"] },
+    { "kind": "amneziawg", "src": ["rel"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^v2raytun/", "example": "v2raytun/android", "note": "platform only, no version", "src": ["ua"] }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "unknown", "src": ["dev"] },
+    { "name": "x-device-os", "value": "OS name", "when": "unknown", "src": ["dev"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "unknown", "src": ["dev"] },
+    { "name": "x-device-model", "value": "model", "when": "unknown", "src": ["dev"] },
+    { "name": "X-App-Version", "value": "app version", "when": "unknown", "src": ["dev"] }
+  ],
+  "accepts": ["XRAY_BASE64", "XRAY_JSON"],
+  "best": "XRAY_BASE64",
+  "bestWhy": {
+    "text": "JSON with balancers is in Android release notes (5.25.82) but unverified end-to-end; not in Remnawave JSON fallback",
+    "src": ["rel", "rwext"]
+  },
+  "capabilities": { "balancer": "partial", "xhttp": "unknown" },
+  "capabilitiesSrc": ["rel"],
+  "headersRead": [
+    { "name": "profile-title", "format": "plain|base64:", "src": ["hdr"] },
+    { "name": "subscription-userinfo", "src": ["hdr"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["hdr"] },
+    { "name": "routing", "format": "base64 of v2RayTun's own routing JSON (NOT a happ:// link)", "src": ["hdr"] },
+    { "name": "announce", "format": "plain|base64:, #RRGGBB colour", "src": ["hdr"] },
+    { "name": "announce-url", "src": ["hdr"] },
+    { "name": "update-always", "src": ["hdr"] },
+    { "name": "network-filter", "src": ["hdr"] },
+    { "name": "fallback-url", "since": "5.24.76", "src": ["rel"] },
+    { "name": "x-hwid-limit", "format": "true", "src": ["rwhwid"] }
+  ],
+  "deepLinks": [
+    { "template": "v2raytun://import/{URL}", "src": ["dl"] }
+  ],
+  "limits": [
+    { "text": "iOS App Store listing gone since ~Aug–Sep 2026", "src": ["ac"] }
+  ],
+  "pitfalls": [
+    { "text": "cannot be version-gated (no version in the UA)", "src": ["ua"] },
+    { "text": "a global Happ-style routing header is the wrong format here: use per-rule headers", "src": ["hdr"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "AuthFailed/CheckNet#75; Th3Nekit/Lean ClientSpoof.kt; Leadaxe/LxBox user_agent.dart",
+      "kind": "third-party"
+    },
+    "dev": { "ref": "docs.v2raytun.com/overview/device-limit", "kind": "docs" },
+    "hdr": { "ref": "docs.v2raytun.com/overview/supported-headers", "kind": "docs" },
+    "dl": { "ref": "docs.v2raytun.com/deep-link", "kind": "docs" },
+    "rel": { "ref": "LXST-CODE/v2RayTun release notes", "kind": "release-notes" },
+    "ac": { "ref": "applecensorship.com/app-store-monitor/app/6476628951", "kind": "third-party" },
+    "rwhwid": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription/subscription.service.ts:241",
+      "kind": "remnawave"
+    },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    }
+  }
+}

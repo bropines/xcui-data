@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "v2rayn",
+  "name": "v2rayN",
+  "vendor": "2dust",
+  "family": "xray",
+  "platforms": ["windows", "linux", "macos"],
+  "openSource": true,
+  "repo": "github.com/2dust/v2rayN",
+  "latest": [
+    { "version": "7.25.6", "date": "2026-10-11" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.10", "src": ["rel"] },
+    { "kind": "sing-box", "version": "1.14", "src": ["rel"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^v2rayn/\\d+\\.\\d+\\.\\d+$",
+      "example": "v2rayN/7.25.6",
+      "note": "3-part version, nothing after it",
+      "src": ["ua"]
+    },
+    {
+      "minVersion": "6.40",
+      "regex": "^v2rayn/(?:6\\.(?:[4-9]\\d|\\d{3,})|[7-9]\\.\\d+|[1-9]\\d\\.\\d+)\\.\\d+$",
+      "example": "v2rayN/7.25.6",
+      "src": ["rwjson", "ua"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "(custom)", "value": "per-subscription headers; no HWID", "when": "opt-in", "src": ["sub"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64", "SINGBOX", "CLASH"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "a full JSON (or each array element) is saved as a custom Xray config named from remarks",
+    "src": ["fmt"]
+  },
+  "gates": [
+    {
+      "type": "XRAY_JSON",
+      "minVersion": "6.40",
+      "regex": "^v2rayn/(?:6\\.(?:[4-9]\\d|\\d{3,})|[7-9]\\.\\d+|[1-9]\\d\\.\\d+)\\.\\d+$",
+      "severity": "error",
+      "note": "Remnawave documents Xray JSON from v2rayN 6.40",
+      "src": ["rwjson"]
+    }
+  ],
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["rel"],
+  "headersRead": [],
+  "deepLinks": [],
+  "limits": [
+    { "text": "whether it rewrites inbounds for system proxy/TUN in custom configs is unverified", "src": ["tun"] }
+  ],
+  "pitfalls": [
+    { "text": "OneXray (v2rayN/<x> OneXray/…) and Passwall2 (v2rayN/9.99) also start with v2rayN/", "src": ["ua"] },
+    { "text": "reads no response headers (no subscription-userinfo)", "src": ["sub"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "2dust/v2rayN@7.25.6:ServiceLib/Common/Utils.cs:925-931; Global.cs:5; Services/DownloadService.cs:277-281",
+      "kind": "source"
+    },
+    "sub": { "ref": "2dust/v2rayN@7.25.6:Handler/SubscriptionHandler.cs:83-93,155", "kind": "source" },
+    "fmt": {
+      "ref": "2dust/v2rayN@7.25.6:Handler/Fmt/V2rayFmt.cs:17-86; Handler/ConfigHandler.cs:2064-2133",
+      "kind": "source"
+    },
+    "tun": { "ref": "2dust/v2rayN@7.25.6:Handler/ConfigHandler.cs:1579-1605", "kind": "inferred" },
+    "rel": { "ref": "2dust/v2rayN release 7.25.6 notes", "kind": "release-notes" },
+    "rwjson": {
+      "ref": "remnawave/panel@f52f3ba:_panel-docs/help-articles/en/EDITOR_TEMPLATES_XRAY_JSON.md:5-12",
+      "kind": "remnawave"
+    }
+  }
+}

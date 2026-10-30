@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "deskbox",
+  "name": "DeskBox",
+  "family": "sing-box",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/mihail-jdanov/DeskBox",
+  "latest": [
+    { "version": "1.4.2", "date": "2026-02-25" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^sfm$", "example": "SFM", "note": "exactly \"SFM\"", "src": ["ua"] }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "UUID from vendor+baseboard+CPU+hardwareUUID", "when": "always", "src": ["ua", "os"] }
+  ],
+  "accepts": ["SINGBOX"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "sing-box JSON only", "src": ["ua"] },
+  "capabilities": { "xhttp": false },
+  "capabilitiesSrc": [],
+  "headersRead": [],
+  "deepLinks": [
+    { "template": "sing-box://import-remote-profile?url={URL_ENC}", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "no space after SFM: match ^sfm(?:$|[ /])", "src": ["ua"] }
+  ],
+  "sources": {
+    "ua": { "ref": "mihail-jdanov/DeskBox@1.4.2:composeApp/…/tools/RemoteConfigsFetcher.kt:24-25", "kind": "source" },
+    "os": { "ref": "mihail-jdanov/DeskBox@1.4.2:tools/OSChecker.kt:93-111", "kind": "source" },
+    "dl": { "ref": "mihail-jdanov/DeskBox@1.4.2:managers/ProfilesManager.kt:29; main.kt:300-320", "kind": "source" }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "husi",
+  "name": "husi",
+  "family": "sing-box",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/xchacha20-poly1305/husi",
+  "brandIcon": "Husi",
+  "latest": [
+    { "version": "v2.3.2", "date": "2026-10-23" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "v1.15.0-alpha.12", "src": ["gomod"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^husi/", "example": "husi/2.3.2 (sing-box 1.15.0-alpha.12)", "src": ["ua"] }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64", "SINGBOX", "CLASH"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "NekoBox lineage; full sing-box config import unverified", "src": ["ua"] },
+  "capabilities": { "xhttp": false },
+  "capabilitiesSrc": ["gomod"],
+  "headersRead": [],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    { "text": "contains \"sing-box\": an unanchored sing-?box rule sends it SINGBOX", "src": ["ua"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "xchacha20-poly1305/husi@v2.3.2:composeApp/src/commonMain/kotlin/fr/husi/net/UserAgent.kt:9-21",
+      "kind": "source"
+    },
+    "gomod": { "ref": "xchacha20-poly1305/husi@v2.3.2:libcore/go.mod:32", "kind": "source" }
+  }
+}

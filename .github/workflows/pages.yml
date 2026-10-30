@@ -1,0 +1,43 @@
+name: Pages
+
+# Publish data.json to https://bropines.github.io/xcui-data/ on every change
+# to main that passes the checks: the editor reads it at run time, so an edit
+# here reaches every copy of the editor without a release of either.
+# GitHub Pages answers with Access-Control-Allow-Origin: *.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      # The same gate as CI: nothing that fails it is published.
+      - run: bun run check
+      - run: bun test
+      - name: Build the site
+        run: bun scripts/build.ts --site site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

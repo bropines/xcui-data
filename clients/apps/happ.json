@@ -1,0 +1,183 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "happ",
+  "name": "Happ",
+  "vendor": "Flyfrog LLC",
+  "family": "xray",
+  "platforms": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux"],
+  "openSource": false,
+  "repo": "github.com/Happ-proxy (binaries and release notes only)",
+  "brandIcon": "Happ",
+  "downloads": {
+    "ios": [
+      { "label": "App Store (Global)", "url": "https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" },
+      { "label": "App Store (RU)", "url": "https://apps.apple.com/ru/app/happ-proxy-utility/id6783623643" }
+    ],
+    "macos": [
+      { "label": "App Store (Global)", "url": "https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" },
+      { "label": "App Store (RU)", "url": "https://apps.apple.com/ru/app/happ-proxy-utility/id6783623643" }
+    ],
+    "tvos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/happ-proxy-utility-for-tv/id6748297274" }
+    ],
+    "android": [
+      { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.happproxy" },
+      { "label": "APK", "url": "https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" }
+    ],
+    "androidtv": [
+      { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.happproxy" },
+      { "label": "APK", "url": "https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" }
+    ],
+    "windows": [
+      {
+        "label": "Windows",
+        "url": "https://github.com/Happ-proxy/happ-desktop/releases/latest/download/setup-Happ.x64.exe"
+      }
+    ]
+  },
+  "latest": [
+    { "version": "6.2.0", "date": "2026-10-26", "platform": ["ios", "macos"] },
+    { "version": "4.9.0", "date": "2026-10-22", "platform": ["android", "androidtv"] },
+    { "version": "4.6.1", "date": "2026-10-27", "platform": ["windows", "macos", "linux"] }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.21", "src": ["rel"] },
+    { "kind": "sing-box", "note": "desktop TUN only (tun-type: singbox)", "src": ["mgmt"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^happ/",
+      "example": "Happ/6.2.0/ios/2610261202535",
+      "note": "Happ/<ver>/<ios|Android|AndroidTV|Windows>/<id>; early builds Happ/<ver>",
+      "src": ["ua"]
+    },
+    {
+      "platform": ["ios"],
+      "minVersion": "4.0",
+      "regex": "^happ/(?:[4-9]|[1-9]\\d)\\.[^/]*/ios",
+      "example": "Happ/6.2.0/ios/2610261202535",
+      "src": ["ua", "op"]
+    },
+    {
+      "minVersion": "4.0",
+      "regex": "^happ/(?:[4-9]|[1-9]\\d)\\.",
+      "example": "Happ/4.9.0/Android/2610221200000",
+      "note": "operator gate for Xray JSON with balancers; Remnawave docs say JSON works on all versions",
+      "src": ["op", "rwjson"]
+    }
+  ],
+  "uaOverridable": "provider-header",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-on", "src": ["mgmt", "gist"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-on", "src": ["mgmt", "gist"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-on", "src": ["mgmt", "gist"] },
+    { "name": "x-device-model", "value": "model", "when": "default-on", "src": ["mgmt", "gist"] },
+    { "name": "x-device-locale", "value": "ru", "when": "always", "src": ["gist"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "JSON goes to Xray 1:1 and its own routing is not applied; balancer and observatory fixes appear in desktop 2.14–2.15 notes",
+    "src": ["links", "rel"]
+  },
+  "gates": [
+    {
+      "type": "XRAY_JSON",
+      "minVersion": "4.0",
+      "regex": "^happ/(?:[4-9]|[1-9]\\d)\\.",
+      "severity": "warning",
+      "note": "operator gate for Xray JSON with balancers; Remnawave docs say JSON works on all versions",
+      "src": ["op", "rwjson"]
+    }
+  ],
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true,
+    "tuic": false
+  },
+  "capabilitiesSrc": ["rel", "faq"],
+  "headersRead": [
+    { "name": "profile-title", "format": "plain or base64:… (≤25 chars)", "src": ["mgmt"] },
+    { "name": "subscription-userinfo", "format": "upload=; download=; total=; expire=", "src": ["mgmt"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["mgmt"] },
+    { "name": "support-url", "src": ["mgmt"] },
+    { "name": "profile-web-page-url", "src": ["mgmt"] },
+    { "name": "announce", "format": "plain or base64:… (≤200)", "src": ["mgmt"] },
+    { "name": "routing", "format": "happ://routing/onadd/<b64>", "src": ["routing"] },
+    { "name": "providerid", "note": "unlocks Advanced parameters", "src": ["pid"] },
+    {
+      "name": "no-limit-enabled",
+      "format": "1|true",
+      "note": "beta; raises the xray-core RAM limit; needs providerid; exclusive with no-limit-xhttp-enabled",
+      "src": ["mgmt"]
+    },
+    { "name": "hide-settings", "format": "1|true", "note": "needs providerid", "src": ["mgmt"] },
+    {
+      "name": "subscription-autoconnect",
+      "note": "+ subscription-autoconnect-type lastused|lowestdelay|random; needs providerid",
+      "src": ["mgmt"]
+    },
+    { "name": "ping-type", "format": "proxy|proxy-head|tcp|icmp", "src": ["mgmt"] },
+    { "name": "encrypt-tag", "note": "AES-128-GCM body", "src": ["enc"] },
+    { "name": "change-user-agent", "note": "+ manual-block-user-agent", "src": ["mgmt"] }
+  ],
+  "deepLinks": [
+    { "template": "happ://add/{URL}", "src": ["rwpage"] },
+    { "template": "happ://routing/onadd/{B64:routing-json}", "src": ["routing"] },
+    {
+      "template": "happ://crypt5/…",
+      "note": "encrypted link; Remnawave keys HAPP_CRYPT3_LINK / HAPP_CRYPT4_LINK",
+      "src": ["crypt"]
+    }
+  ],
+  "limits": [
+    { "text": "iOS Network Extension ~50 MB: 15 hosts peaked at 56–78 MB, 10 hosts ~28 MB", "src": ["op"] },
+    { "text": "a JSON subscription may carry at most one routing profile", "src": ["routing"] },
+    { "text": "JSON with dns address \"localhost\" falls back to default DNS", "src": ["issue1"] }
+  ],
+  "pitfalls": [
+    {
+      "text": "versions differ per platform (iOS 6.x, Android/desktop 4.x): gate per platform or with x-device-os",
+      "src": ["rel", "rwrouting"]
+    },
+    { "text": "a provider-set change-user-agent breaks ^Happ/ detection", "src": ["rw249"] },
+    { "text": "third-party tools send Happ/1.0 to get JSON; a UA is not authentication", "src": ["spoof"] }
+  ],
+  "sources": {
+    "ua": { "ref": "github.com/AuthFailed/CheckNet/issues/75 (captured UAs, 2026-07)", "kind": "third-party" },
+    "gist": { "ref": "gist bubasik/af37247b (Happ/3.13.0 request headers)", "kind": "third-party" },
+    "mgmt": { "ref": "happ.su/main/dev-docs/app-management", "kind": "docs" },
+    "routing": { "ref": "happ.su/main/dev-docs/routing", "kind": "docs" },
+    "pid": { "ref": "happ.su/main/dev-docs/provider-id", "kind": "docs" },
+    "enc": { "ref": "happ.su/main/dev-docs/encrypting-subscription-content", "kind": "docs" },
+    "crypt": {
+      "ref": "happ.su/main/dev-docs/crypto-link; remnawave/backend@3.4.7:libs/subscription-page/constants/template-keys.constant.ts:4-5",
+      "kind": "docs"
+    },
+    "links": { "ref": "happ.su/main/dev-docs/examples-of-links-and-parameters §3.1", "kind": "docs" },
+    "faq": { "ref": "happ.su/main/faq/adding-configuration-subscription", "kind": "docs" },
+    "rel": { "ref": "Happ-proxy/happ-android, happ-desktop releases; App Store notes 6.2.0", "kind": "release-notes" },
+    "issue1": { "ref": "github.com/Happ-proxy/.github/issues/1", "kind": "third-party" },
+    "rw249": { "ref": "github.com/remnawave/panel/issues/249", "kind": "remnawave" },
+    "rwrouting": { "ref": "remnawave/panel@f52f3ba:docs/learn-en/routing-rules.md:188-238", "kind": "remnawave" },
+    "spoof": { "ref": "kutovoys/xray-checker:subscription/parser.go", "kind": "third-party" },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:292",
+      "kind": "remnawave"
+    },
+    "rwjson": {
+      "ref": "remnawave/panel@f52f3ba:_panel-docs/help-articles/en/EDITOR_TEMPLATES_XRAY_JSON.md:5-12",
+      "kind": "remnawave"
+    },
+    "op": { "ref": "operator production Response Rules (private), 2026-10", "kind": "operator" }
+  }
+}

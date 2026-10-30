@@ -1,0 +1,127 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "prizrak-box",
+  "name": "Prizrak-Box",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/legiz-ru/Prizrak-Box",
+  "brandIcon": "PrizrakBox",
+  "downloads": {
+    "windows": [
+      {
+        "label": "Windows (x64)",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/windows-amd64.msi"
+      },
+      {
+        "label": "Windows on ARM",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/windows-arm64.msi"
+      }
+    ],
+    "macos": [
+      {
+        "label": "Apple Silicon",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-arm64-dmg.zip"
+      },
+      {
+        "label": "Intel",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/macos-amd64-dmg.zip"
+      }
+    ],
+    "linux": [
+      {
+        "label": "amd64 (.deb)",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/linux-amd64.deb"
+      },
+      {
+        "label": "arm64 (.deb)",
+        "url": "https://github.com/legiz-ru/Prizrak-Box/releases/latest/download/linux-arm64.deb"
+      }
+    ]
+  },
+  "latest": [
+    { "version": "v1.0.20", "date": "2025-10-27" },
+    { "version": "v2.0.0-rc01", "date": "2026-10-26", "channel": "pre" }
+  ],
+  "cores": [
+    {
+      "kind": "mihomo",
+      "version": "snakem982 fork ~v1.19.13 (1.0.20)",
+      "note": "predates XHTTP (inferred)",
+      "src": ["gomod1"]
+    },
+    { "kind": "mihomo", "version": "Prizrak-Core v1.19.33-r3 (rc01)", "src": ["gomod2"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^prizrak-box/", "example": "prizrak-box/v1.0.20", "src": ["ua1"] },
+    {
+      "minVersion": "2.0.0",
+      "regex": "^prizrak-box/v?\\d[^ ]* \\(desktop build;",
+      "example": "prizrak-box/v2.0.0-rc01 (Desktop Build; Windows OS; Prizrak-Core v1.19.33-r3)",
+      "src": ["ua2"]
+    },
+    {
+      "maxVersion": "1.0.x",
+      "regex": "^clash-verge/v2\\.3\\.0$",
+      "example": "clash-verge/v2.3.0",
+      "note": "1.0.20 with the HWID setting off",
+      "src": ["ua1"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-on", "src": ["ua1", "set"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-on", "src": ["ua1", "set"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-on", "src": ["ua1", "set"] },
+    { "name": "x-device-model", "value": "model", "when": "default-on", "src": ["ua1", "set"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo; Remnawave extended client", "src": ["rwext"] },
+  "capabilities": { "xhttp": "partial", "tun": true },
+  "capabilitiesSrc": ["gomod1", "gomod2"],
+  "headersRead": [
+    { "name": "content-disposition", "src": ["res"] },
+    { "name": "profile-title", "format": "base64:", "src": ["res"] },
+    { "name": "subscription-userinfo", "src": ["res"] },
+    { "name": "profile-update-interval", "src": ["res"] },
+    { "name": "profile-web-page-url", "src": ["res"] },
+    { "name": "support-url", "src": ["res"] },
+    {
+      "name": "announce",
+      "since": "2.0.0-rc01",
+      "format": "base64:",
+      "note": "rc01 also: Profile-Logo, Announce-Url, Pxd-Template(-Scheme), Pxd-Theme, X-Hwid-*, global-mode, Subscription-Renew-Url, Notify-*, new-domain, fallback-url",
+      "src": ["gomod2"]
+    }
+  ],
+  "deepLinks": [
+    { "template": "prizrak-box://install-config?url={URL_ENC}", "src": ["dl", "rwpage"] }
+  ],
+  "limits": [
+    { "text": "1.0.20 core has no XHTTP: a MIHOMO template with xhttp proxies may fail there", "src": ["gomod1"] }
+  ],
+  "pitfalls": [
+    { "text": "1.0.20 with HWID off is indistinguishable from Clash Verge 2.3.0", "src": ["ua1"] }
+  ],
+  "sources": {
+    "ua1": {
+      "ref": "legiz-ru/Prizrak-Box@v1.0.20:src-go/pkg/utils/httpclient.go:28,52-77; api/handlers/pandora.go:156-161",
+      "kind": "source"
+    },
+    "ua2": { "ref": "legiz-ru/Prizrak-Box@dev_21:src-go/pkg/utils/httpclient.go:79-88", "kind": "source" },
+    "set": { "ref": "legiz-ru/Prizrak-Box@v1.0.20:src/store/settingStore.ts:14", "kind": "source" },
+    "res": { "ref": "legiz-ru/Prizrak-Box@v1.0.20:src-go/internal/resolve.go:254-447", "kind": "source" },
+    "gomod1": { "ref": "legiz-ru/Prizrak-Box@v1.0.20:go.mod:14,117", "kind": "source" },
+    "gomod2": { "ref": "legiz-ru/Prizrak-Box@dev_21:go.mod:159", "kind": "source" },
+    "dl": { "ref": "legiz-ru/Prizrak-Box@v1.0.20:forge.config.ts:38", "kind": "source" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:1020",
+      "kind": "remnawave"
+    }
+  }
+}

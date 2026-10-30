@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "cmfa",
+  "name": "Clash Meta for Android",
+  "family": "mihomo",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/MetaCubeX/ClashMetaForAndroid",
+  "brandIcon": "ClashMeta",
+  "downloads": {
+    "android": [
+      { "label": "F-Droid", "url": "https://f-droid.org/packages/com.github.metacubex.clash.meta/" },
+      { "label": "GitHub releases", "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/latest" }
+    ]
+  },
+  "latest": [
+    { "version": "v2.11.36", "date": "2026-10-21" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.33 (3f27ef39)", "src": ["core"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clashmetaforandroid/",
+      "example": "ClashMetaForAndroid/2.11.36.Meta",
+      "note": "alpha flavor: .Alpha",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo v1.19.33", "src": ["core"] },
+  "capabilities": {
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "masque": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["core"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["ua"] },
+    { "name": "profile-update-interval", "src": ["ua"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "clashmeta://install-config?name={NAME}&url={URL_ENC}",
+      "note": "clash:// too; &type=&update-interval=",
+      "src": ["dl", "rwpage"]
+    }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "also matches ^clash; caught earlier by clash[-.]?meta", "src": ["rwdef"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "MetaCubeX/ClashMetaForAndroid@v2.11.36:core/src/main/golang/native/config/fetch.go:42-50",
+      "kind": "source"
+    },
+    "dl": {
+      "ref": "MetaCubeX/ClashMetaForAndroid@v2.11.36:AndroidManifest.xml:87-89; ExternalControlActivity.kt:33-44",
+      "kind": "source"
+    },
+    "core": { "ref": "MetaCubeX/ClashMetaForAndroid@v2.11.36 mihomo submodule 3f27ef39", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:1892",
+      "kind": "remnawave"
+    }
+  }
+}

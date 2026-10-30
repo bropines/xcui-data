@@ -1,0 +1,41 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "sf-desktop",
+  "name": "sing-box for Desktop (SFW / SFL)",
+  "vendor": "SagerNet",
+  "family": "sing-box",
+  "platforms": ["windows", "linux"],
+  "openSource": true,
+  "repo": "github.com/SagerNet/sing-box-for-desktop",
+  "brandIcon": "Singbox",
+  "latest": [
+    { "version": "1.14.x", "date": "2026-08-31" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^sf[wl] \\(sing-box ", "example": "SFW (sing-box 1.14.4; language en_US)", "src": ["ua"] }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["SINGBOX"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "checkConfig gate", "src": ["prof"] },
+  "capabilities": { "xhttp": false, "tun": true },
+  "capabilitiesSrc": ["ua"],
+  "headersRead": [],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "NOT matched by the Remnawave default sing-box regex: gets base64 and the import fails",
+      "src": ["rwdef"]
+    }
+  ],
+  "sources": {
+    "ua": { "ref": "SagerNet/sing-box-for-desktop@8aab8eab:src/main/userAgent.ts:3-6", "kind": "source" },
+    "prof": { "ref": "SagerNet/sing-box-for-desktop@8aab8eab:src/main/profiles.ts:206-219,369-370", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

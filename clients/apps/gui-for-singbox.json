@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "gui-for-singbox",
+  "name": "GUI.for.SingBox",
+  "family": "sing-box",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/GUI-for-Cores/GUI.for.SingBox",
+  "latest": [
+    { "version": "v1.28.1", "date": "2026-10-21" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "src": ["sub"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clash\\.meta/mihomo$",
+      "example": "clash.meta/mihomo",
+      "note": "default per-subscription header",
+      "src": ["sub"]
+    },
+    {
+      "regex": "^gui\\.for\\.singbox/",
+      "example": "GUI.for.SingBox/v1.28.1",
+      "note": "app fallback; use for subscriptions unconfirmed",
+      "src": ["oth"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [],
+  "accepts": ["SINGBOX"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "takes .outbounds from sing-box JSON; mihomo YAML needs a converter plugin", "src": ["sub"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["sub"] }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    { "text": "its default UA hits the Mihomo rule, which gives it a YAML it cannot use", "src": ["sub", "rwdef"] }
+  ],
+  "sources": {
+    "sub": {
+      "ref": "GUI-for-Cores/GUI.for.SingBox@v1.28.1:frontend/src/stores/subscribes.ts:117,126-143,282",
+      "kind": "source"
+    },
+    "oth": { "ref": "GUI-for-Cores/GUI.for.SingBox@v1.28.1:frontend/src/utils/others.ts:220-222", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

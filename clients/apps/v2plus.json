@@ -1,0 +1,76 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "v2plus",
+  "name": "v2plus",
+  "family": "xray",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/GoodbyeWL/v2plus",
+  "latest": [
+    { "version": "1.3.0", "date": "2026-08-23" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "AndroidLibXrayLite v26.8.20 (exact core unverified)", "src": ["libs"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^v2plus/", "example": "v2plus/1.3.0", "src": ["ua"] }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "always", "src": ["hwid"] },
+    { "name": "x-device-os", "value": "OS name", "when": "always", "src": ["hwid"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "always", "src": ["hwid"] },
+    { "name": "x-device-model", "value": "model", "when": "always", "src": ["hwid"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "same detection as v2rayNG; arrays supported; listed in the Remnawave JSON fallback",
+    "src": ["fmt", "rwext"]
+  },
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": "unknown",
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["libs"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["fmt"] },
+    { "name": "#support-url / #announce (body lines)", "note": "profile-title deliberately ignored", "src": ["fmt"] }
+  ],
+  "deepLinks": [
+    { "template": "v2plus://install-sub?url={URL_ENC}", "note": "also install-config and import", "src": ["dl"] }
+  ],
+  "limits": [
+    {
+      "text": "XrayCustomConfigGuard: inbounds only socks/http/tun/mixed; refuses loopback/reverse outbounds; strips reverse, freedom redirect, sockopt interface/mark/tproxy",
+      "src": ["guard"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "injects x-hwid into WS/HTTP-header outbound requests too", "src": ["hwid"] }
+  ],
+  "sources": {
+    "ua": { "ref": "GoodbyeWL/v2plus@1.3.0:util/HttpUtil.kt:283-288", "kind": "source" },
+    "hwid": {
+      "ref": "GoodbyeWL/v2plus@1.3.0:util/HttpUtil.kt:376-379; util/Utils.kt:591-605; handler/V2rayConfigManager.kt:1377,1427",
+      "kind": "source"
+    },
+    "fmt": { "ref": "GoodbyeWL/v2plus@1.3.0:handler/AngConfigManager.kt:374-404,615-708", "kind": "source" },
+    "guard": { "ref": "GoodbyeWL/v2plus@1.3.0:handler/XrayCustomConfigGuard.kt", "kind": "source" },
+    "dl": { "ref": "GoodbyeWL/v2plus@1.3.0:AndroidManifest.xml:162-165", "kind": "source" },
+    "libs": { "ref": "GoodbyeWL/v2plus@1.3.0:app/libs/README.md", "kind": "source" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    }
+  }
+}

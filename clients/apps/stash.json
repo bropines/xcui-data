@@ -1,0 +1,76 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "stash",
+  "name": "Stash",
+  "family": "stash",
+  "platforms": ["ios", "tvos", "macos"],
+  "openSource": false,
+  "brandIcon": "Stash",
+  "downloads": {
+    "ios": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/stash-rule-based-proxy/id1596063349" }
+    ],
+    "tvos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/stash-rule-based-proxy/id1596063349" }
+    ],
+    "macos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/stash-rule-based-proxy/id1596063349" }
+    ]
+  },
+  "latest": [
+    { "version": "3.4.0", "date": "2026-06-23", "platform": ["ios", "tvos"] },
+    { "version": "4.2.0", "date": "2026-07-02", "platform": ["macos"] }
+  ],
+  "cores": [
+    { "kind": "proprietary", "note": "Clash-compatible", "src": ["types"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^stash", "example": "Stash/3.4.0 Clash/1.11.0", "note": "exact format unverified", "src": ["rwdef"] }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["STASH", "CLASH"],
+  "best": "STASH",
+  "bestWhy": { "text": "native Stash YAML", "src": ["types"] },
+  "capabilities": {
+    "xhttp": "partial",
+    "reality": true,
+    "vision": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "masque": "partial"
+  },
+  "capabilitiesSrc": ["types"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "format": "upload=; download=; total=; expire=", "src": ["sub"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "stash://install-config?url={URL_ENC}",
+      "note": "also https://link.stash.ws/install-config/<host/path>",
+      "src": ["dl", "rwpage"]
+    }
+  ],
+  "limits": [
+    {
+      "text": "XHTTP / MASQUE / VLESS-enc documented for iOS 3.6+ / macOS 4.3+, newer than the latest release notes",
+      "src": ["types", "rel"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "checks every 12 h, tries a HEAD request first: the panel must answer HEAD", "src": ["sub"] }
+  ],
+  "sources": {
+    "types": { "ref": "stash.wiki/en/proxy-protocols/proxy-types", "kind": "docs" },
+    "sub": { "ref": "stash.wiki/en/features/service-provider-subscription", "kind": "docs" },
+    "dl": { "ref": "stash.wiki/en/faq/url-schema", "kind": "docs" },
+    "rel": { "ref": "stash.wiki/en/release-notes/ios; /macos", "kind": "release-notes" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:382",
+      "kind": "remnawave"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "flowvy",
+  "name": "Flowvy",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": false,
+  "repo": "github.com/flowvy/desktop (README + releases)",
+  "latest": [
+    { "version": "0.3.5", "date": "2026-08-27" },
+    { "version": "1.0.0-beta.9", "date": "2026-10-01", "channel": "pre" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "src": ["rwc"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^flowvy/", "example": "Flowvy/1.0.0-beta.9", "note": "format unverified", "src": ["rwext"] }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "?", "when": "unknown", "src": ["rwc"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "Remnawave lists core mihomo", "src": ["rwc"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    {
+      "name": "client-update-mirror",
+      "note": "+ subscription-fallback-url, client-accent-color, profile-config-restrict, profile-advanced-info; plain or base64:",
+      "src": ["rel"]
+    }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [],
+  "sources": {
+    "rel": { "ref": "flowvy/desktop release notes", "kind": "release-notes" },
+    "rwc": { "ref": "remnawave/panel@f52f3ba:src/data/clients.ts:380-402", "kind": "remnawave" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    }
+  }
+}

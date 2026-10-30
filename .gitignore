@@ -1,0 +1,6 @@
+# Built by `bun run build`; the release tarball and Pages carry it.
+/dist/
+/site/
+node_modules/
+*.tgz
+.DS_Store

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "flclash",
+  "name": "FlClash",
+  "family": "mihomo",
+  "platforms": ["android", "windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/chen08209/FlClash",
+  "brandIcon": "FlClash",
+  "latest": [
+    { "version": "v0.9.2", "date": "2026-10-24" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "fork chen08209/Clash.Meta@c5062921", "src": ["core"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^flclash/", "example": "FlClash/v0.9.2 clash-verge Platform/android", "src": ["ua"] }
+  ],
+  "uaOverridable": "global",
+  "requestHeaders": [],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo core with xhttp/masque/anytls", "src": ["core"] },
+  "capabilities": {
+    "xhttp": true,
+    "masque": true,
+    "anytls": true,
+    "reality": true,
+    "vision": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["core"],
+  "headersRead": [
+    { "name": "content-disposition", "src": ["prof"] },
+    { "name": "subscription-userinfo", "src": ["prof"] }
+  ],
+  "deepLinks": [
+    { "template": "flclash://install-config?url={URL_ENC}", "note": "clash:// and clashmeta:// too", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "UA contains \"clash-verge\" mid-string: never use an unanchored clash-verge regex", "src": ["ua"] },
+    { "text": "user may switch the UA to clash-verge/v2.4.2 or ClashforWindows/0.19.23", "src": ["uas"] }
+  ],
+  "sources": {
+    "ua": { "ref": "chen08209/FlClash@v0.9.2:lib/common/package.dart:8-12", "kind": "source" },
+    "uas": { "ref": "chen08209/FlClash@v0.9.2:lib/models/config.dart:33", "kind": "source" },
+    "prof": { "ref": "chen08209/FlClash@v0.9.2:lib/models/profile.dart:186-188", "kind": "source" },
+    "dl": { "ref": "chen08209/FlClash@v0.9.2:lib/common/protocol.dart:7; AndroidManifest.xml:69-73", "kind": "source" },
+    "core": { "ref": "chen08209/FlClash@v0.9.2 core submodule c5062921", "kind": "source" }
+  }
+}

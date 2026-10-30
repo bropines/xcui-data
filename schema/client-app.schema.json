@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "vendor": { "type": "string", "minLength": 1 },
+    "family": { "type": "string", "enum": ["xray", "mihomo", "stash", "sing-box", "other"] },
+    "platforms": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux", "openwrt"]
+      }
+    },
+    "openSource": { "type": "boolean" },
+    "repo": { "type": "string", "minLength": 1 },
+    "brandIcon": { "type": "string", "minLength": 1 },
+    "downloads": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "enum": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux", "openwrt"]
+      },
+      "additionalProperties": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string", "minLength": 1 },
+            "url": { "type": "string", "format": "uri" }
+          },
+          "required": ["label", "url"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "latest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": { "type": "string", "minLength": 1 },
+          "date": { "type": "string" },
+          "platform": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux", "openwrt"]
+            }
+          },
+          "channel": { "type": "string", "enum": ["stable", "pre"] }
+        },
+        "required": ["version", "date"],
+        "additionalProperties": false
+      }
+    },
+    "cores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["xray", "sing-box", "mihomo", "clash-premium", "clash-rs", "v2ray5", "amneziawg", "proprietary"]
+          },
+          "version": { "type": "string", "minLength": 1 },
+          "note": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["kind", "src"],
+        "additionalProperties": false
+      }
+    },
+    "uaPatterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux", "openwrt"]
+            }
+          },
+          "minVersion": { "type": "string", "minLength": 1 },
+          "maxVersion": { "type": "string", "minLength": 1 },
+          "regex": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Lowercase-safe: identifies the app; version gates are separate entries."
+          },
+          "example": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A real (or, with a note saying so, illustrative) User-Agent this pattern matches."
+          },
+          "note": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["regex", "example", "src"],
+        "additionalProperties": false
+      }
+    },
+    "uaOverridable": {
+      "type": "string",
+      "enum": ["no", "global", "per-subscription", "global+per-subscription", "provider-header", "unknown"]
+    },
+    "requestHeaders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "value": { "type": "string", "minLength": 1 },
+          "when": { "type": "string", "enum": ["always", "default-on", "default-off", "opt-in", "unknown"] },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["name", "value", "when", "src"],
+        "additionalProperties": false
+      }
+    },
+    "accepts": {
+      "minItems": 1,
+      "type": "array",
+      "items": { "type": "string", "enum": ["XRAY_JSON", "XRAY_BASE64", "MIHOMO", "STASH", "CLASH", "SINGBOX"] }
+    },
+    "best": { "type": "string", "enum": ["XRAY_JSON", "XRAY_BASE64", "MIHOMO", "STASH", "CLASH", "SINGBOX"] },
+    "bestWhy": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "src": {
+          "minItems": 1,
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Keys into this app's `sources`: where the fact was read."
+        }
+      },
+      "required": ["text", "src"],
+      "additionalProperties": false
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["XRAY_JSON", "XRAY_BASE64", "MIHOMO", "STASH", "CLASH", "SINGBOX"] },
+          "minVersion": { "type": "string", "minLength": 1 },
+          "regex": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Lowercase-safe; matches exactly the UAs of the versions that take `type`."
+          },
+          "severity": { "type": "string", "enum": ["error", "warning"] },
+          "note": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["type", "minVersion", "regex", "severity", "note", "src"],
+        "additionalProperties": false
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "balancer": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "observatory": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "routing": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "xhttp": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "reality": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "vision": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "vlessEncryption": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "hysteria2": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "tuic": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "wireguard": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "anytls": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "masque": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "finalmask": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        },
+        "tun": {
+          "anyOf": [
+            { "type": "boolean", "const": true },
+            { "type": "boolean", "const": false },
+            { "type": "string", "const": "partial" },
+            { "type": "string", "const": "unknown" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilitiesSrc": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "headersRead": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "format": { "type": "string", "minLength": 1 },
+          "since": { "type": "string", "minLength": 1 },
+          "note": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["name", "src"],
+        "additionalProperties": false
+      }
+    },
+    "deepLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "type": "string",
+            "minLength": 1,
+            "description": "`{URL}` raw subscription URL, `{URL_ENC}` encodeURIComponent(URL), `{NAME}` display name, `{B64:x}` base64 of x."
+          },
+          "platforms": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ios", "macos", "tvos", "android", "androidtv", "windows", "linux", "openwrt"]
+            }
+          },
+          "note": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["template", "src"],
+        "additionalProperties": false
+      }
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["text", "src"],
+        "additionalProperties": false
+      }
+    },
+    "pitfalls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "src": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Keys into this app's `sources`: where the fact was read."
+          }
+        },
+        "required": ["text", "src"],
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "object",
+      "propertyNames": { "type": "string", "minLength": 1 },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "ref": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "source",
+              "docs",
+              "release-notes",
+              "remnawave",
+              "operator",
+              "third-party",
+              "inferred",
+              "unverified"
+            ]
+          }
+        },
+        "required": ["ref", "kind"],
+        "additionalProperties": false
+      }
+    },
+    "$schema": { "type": "string" }
+  },
+  "required": [
+    "id",
+    "name",
+    "family",
+    "platforms",
+    "openSource",
+    "latest",
+    "cores",
+    "uaPatterns",
+    "uaOverridable",
+    "requestHeaders",
+    "accepts",
+    "best",
+    "bestWhy",
+    "capabilities",
+    "capabilitiesSrc",
+    "headersRead",
+    "deepLinks",
+    "limits",
+    "pitfalls",
+    "sources"
+  ],
+  "additionalProperties": false,
+  "title": "A client app in xcui-data (clients/apps/<id>.json)"
+}

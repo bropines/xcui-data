@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "clash-verge-rev",
+  "name": "Clash Verge Rev",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/clash-verge-rev/clash-verge-rev",
+  "brandIcon": "ClashVerge",
+  "latest": [
+    { "version": "v2.5.8", "date": "2026-10-09" }
+  ],
+  "cores": [
+    {
+      "kind": "mihomo",
+      "version": "stable at build time (~v1.19.32, inferred)",
+      "note": "alpha optional",
+      "src": ["pre"]
+    }
+  ],
+  "uaPatterns": [
+    { "regex": "^clash-verge/", "example": "clash-verge/v2.5.8", "src": ["ua"] }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "rejects a body without proxies/proxy-providers; CLASH type drops XHTTP", "src": ["item", "op"] },
+  "capabilities": {
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "anytls": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["pre"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "note": "also any *- prefix e.g. x-amz-meta-", "src": ["item"] },
+    { "name": "content-disposition", "format": "filename* / filename", "src": ["item"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["item"] },
+    { "name": "profile-web-page-url", "src": ["item"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "clash://install-config?name={NAME}&url={URL_ENC}",
+      "note": "everything after url= is taken: put url LAST; clash-verge:// also registered",
+      "src": ["dl"]
+    }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "matches ^clash: the Mihomo rule must come before the CLASH rule", "src": ["ua", "op"] },
+    { "text": "does not read profile-title", "src": ["item"] }
+  ],
+  "sources": {
+    "ua": { "ref": "clash-verge-rev/clash-verge-rev@v2.5.8:src-tauri/src/utils/network.rs:247-253", "kind": "source" },
+    "item": {
+      "ref": "clash-verge-rev/clash-verge-rev@v2.5.8:src-tauri/src/config/prfitem.rs:251,296-364",
+      "kind": "source"
+    },
+    "dl": {
+      "ref": "clash-verge-rev/clash-verge-rev@v2.5.8:src-tauri/tauri.conf.json:46; src-tauri/src/utils/resolve/scheme.rs:43-60",
+      "kind": "source"
+    },
+    "pre": { "ref": "clash-verge-rev/clash-verge-rev@v2.5.8:scripts/prebuild.mjs:168-171", "kind": "source" },
+    "op": { "ref": "operator production Response Rules (private), 2026-10", "kind": "operator" }
+  }
+}

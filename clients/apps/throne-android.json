@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "throne-android",
+  "name": "Throne (Android)",
+  "family": "xray",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/throneproj/ThroneForAndroid",
+  "brandIcon": "Throne",
+  "latest": [
+    { "version": "2.0.4", "date": "2026-10-24" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "1.15.0-alpha.13 fork", "src": ["props"] },
+    { "kind": "xray", "version": "fork based on v26.10.21", "src": ["props"] }
+  ],
+  "uaPatterns": [
+    {
+      "platform": ["android"],
+      "regex": "^throne/android/",
+      "example": "Throne/Android/2.0.4",
+      "note": "previews: 2.0.0-pre.N",
+      "src": ["ua"]
+    },
+    {
+      "platform": ["android"],
+      "minVersion": "2.0.0",
+      "regex": "^throne/android/(?:[2-9]|[1-9]\\d+)(?:\\.|$)",
+      "example": "Throne/Android/2.0.0",
+      "src": ["arr", "op"]
+    }
+  ],
+  "uaOverridable": "global+per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-off", "src": ["hwid"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-off", "src": ["hwid"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-off", "src": ["hwid"] },
+    { "name": "x-device-model", "value": "model", "when": "default-off", "src": ["hwid"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64", "CLASH", "SINGBOX"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "≥2.0: an array becomes CUSTOM_XRAY_FULL_CONFIG profiles named from remarks; ≤1.6.x get links only",
+    "src": ["arr", "op"]
+  },
+  "gates": [
+    {
+      "type": "XRAY_JSON",
+      "minVersion": "2.0.0",
+      "regex": "^throne/android/(?:[2-9]|[1-9]\\d+)(?:\\.|$)",
+      "severity": "error",
+      "note": "Android 1.6.x and older has no array parser: an Xray JSON array does not import",
+      "src": ["arr"]
+    }
+  ],
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true,
+    "masque": true
+  },
+  "capabilitiesSrc": ["props"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["hdr"] },
+    { "name": "profile-update-interval", "src": ["hdr"] },
+    { "name": "profile-title", "format": "base64:", "src": ["hdr"] },
+    { "name": "announce", "note": "also body key notice", "src": ["hdr"] },
+    { "name": "profile-web-page-url", "src": ["hdr"] },
+    { "name": "support-url", "src": ["hdr"] }
+  ],
+  "deepLinks": [
+    { "template": "throne://addsub/{B64:URL#NAME}", "src": ["dl"] },
+    { "template": "clash://install-config?url={URL_ENC}&name={NAME}", "src": ["dl"] }
+  ],
+  "limits": [
+    {
+      "text": "a single object is kept whole only when exactly one egress outbound chains through its siblings",
+      "src": ["arr"]
+    }
+  ],
+  "pitfalls": [
+    { "text": "x-hwid only from v2.0.0; v1.6.4 sends none", "src": ["hwid"] },
+    { "text": "a desktop rule ^Throne/\\d does not match Android", "src": ["ua"] }
+  ],
+  "sources": {
+    "ua": { "ref": "throneproj/ThroneForAndroid@v2.0.4:ktx/Nets.kt:356", "kind": "source" },
+    "hwid": {
+      "ref": "throneproj/ThroneForAndroid@v2.0.4:group/RequestIdentity.kt:20-30; database/SettingsRepo.kt:293",
+      "kind": "source"
+    },
+    "arr": {
+      "ref": "throneproj/ThroneForAndroid@v2.0.4:outbound/import/ProfileImport.kt:563-583,642-657",
+      "kind": "source"
+    },
+    "hdr": { "ref": "throneproj/ThroneForAndroid@v2.0.4:group/SubscriptionMetadata.kt:24-93", "kind": "source" },
+    "dl": {
+      "ref": "throneproj/ThroneForAndroid@v2.0.4:AndroidManifest.xml; ui/SubscribeFlows.kt:93-105",
+      "kind": "source"
+    },
+    "props": { "ref": "throneproj/ThroneForAndroid@v2.0.4:nb4a.properties (Throne@1f30af24)", "kind": "source" },
+    "op": { "ref": "operator production Response Rules (private), 2026-10", "kind": "operator" }
+  }
+}

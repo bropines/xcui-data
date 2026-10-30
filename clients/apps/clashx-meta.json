@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "clashx-meta",
+  "name": "ClashX Meta",
+  "family": "mihomo",
+  "platforms": ["macos"],
+  "openSource": true,
+  "repo": "github.com/MetaCubeX/ClashX.Meta",
+  "latest": [
+    { "version": "v1.4.47", "date": "2026-10-21" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.33", "src": ["ci"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clashx(?: |%20)meta/",
+      "example": "ClashX%20Meta/612 CFNetwork/1568.100.1 Darwin/24.0.0",
+      "note": "default CFNetwork UA; %20 encoding inferred",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo core", "src": ["ci"] },
+  "capabilities": { "xhttp": true, "tun": true },
+  "capabilitiesSrc": ["ci"],
+  "headersRead": [
+    { "name": "content-disposition", "note": "via suggestedFilename", "src": ["ua"] }
+  ],
+  "deepLinks": [
+    { "template": "clashx://install-config?url={URL_ENC}&name={NAME}", "note": "clash:// too", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "Remnawave's 'clashx meta' (space) misses '%20', so it falls to ^clash: CLASH (inferred)",
+      "src": ["ua", "rwdef"]
+    }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "MetaCubeX/ClashX.Meta@v1.4.47:ClashX/General/Managers/RemoteConfigManager.swift:156-184",
+      "kind": "inferred"
+    },
+    "dl": { "ref": "MetaCubeX/ClashX.Meta@v1.4.47:Info.plist:49-64; AppDelegate.swift:800-810", "kind": "source" },
+    "ci": { "ref": "MetaCubeX/ClashX.Meta@v1.4.47:.github/workflows (MIHOMO_TAG)", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

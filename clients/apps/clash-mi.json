@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "clash-mi",
+  "name": "Clash Mi",
+  "vendor": "KaringX",
+  "family": "mihomo",
+  "platforms": ["ios", "macos", "android", "windows", "linux"],
+  "openSource": true,
+  "repo": "github.com/KaringX/clashmi",
+  "brandIcon": "ClashMi",
+  "latest": [
+    { "version": "v1.0.31.1703", "date": "2026-10-09" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.33", "src": ["ua"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clashmeta/[\\d.]+; mihomo/",
+      "example": "ClashMeta/1.19.33; mihomo/1.19.33",
+      "note": "no app name in the subscription UA",
+      "src": ["ua"]
+    },
+    {
+      "regex": "^clashmi/",
+      "example": "ClashMi/1.0.32.1801 platform/ios ClashMeta/1.19.33; mihomo/1.19.33",
+      "note": "generic HTTP fallback UA",
+      "src": ["http"]
+    }
+  ],
+  "uaOverridable": "global+per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "opt-in", "src": ["hw"] },
+    { "name": "x-device-os", "value": "OS name", "when": "opt-in", "src": ["hw"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "opt-in", "src": ["hw"] },
+    { "name": "x-device-model", "value": "model", "when": "opt-in", "src": ["hw"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "needs YAML with proxies or proxy-providers", "src": ["pm"] },
+  "capabilities": { "xhttp": true, "tun": true },
+  "capabilitiesSrc": ["ua"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["pm"] },
+    { "name": "profile-update-interval", "format": "hours, min 1", "src": ["pm"] },
+    { "name": "profile-title", "format": "base64:", "src": ["pm"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "clashmi://install-config?url={URL_ENC}&name={NAME}&xhwid=1",
+      "note": "xhwid=1 turns HWID on for the profile",
+      "src": ["dl"]
+    }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "ClashMi/… fallback UA misses Remnawave's Mihomo regex and falls to ^clash", "src": ["http", "rwdef"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "KaringX/clashmi@main:lib/app/modules/setting_manager.dart:312-318; app_utils.dart:61",
+      "kind": "source"
+    },
+    "http": { "ref": "KaringX/clashmi@main:lib/app/utils/http_utils.dart:26-30", "kind": "source" },
+    "hw": { "ref": "KaringX/clashmi@main:lib/app/utils/hwid_utils.dart:7-16; scheme_handler.dart:88", "kind": "source" },
+    "pm": { "ref": "KaringX/clashmi@main:lib/app/modules/profile_manager.dart:224,597,624,699-720", "kind": "source" },
+    "dl": { "ref": "KaringX/clashmi@main:AndroidManifest.xml:85-86", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

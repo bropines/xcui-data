@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "hiddify",
+  "name": "Hiddify",
+  "family": "sing-box",
+  "platforms": ["android", "ios", "macos", "windows", "linux"],
+  "openSource": true,
+  "repo": "github.com/hiddify/hiddify-app",
+  "brandIcon": "Hiddify",
+  "latest": [
+    { "version": "v4.1.1", "date": "2026-03-05" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "hiddify-core 4.1.0 (sing-box 1.13.0 fork)", "src": ["deps"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^hiddifynextx?/",
+      "example": "HiddifyNext/4.1.1 (android) like ClashMeta v2ray sing-box",
+      "note": "HiddifyNextX/… when \"use Xray core\" is on",
+      "src": ["ua", "uax"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64", "SINGBOX", "CLASH"],
+  "best": "XRAY_BASE64",
+  "bestWhy": {
+    "text": "from a sing-box JSON it keeps only outbounds/endpoints (DNS and routing dropped unless full-config mode); links go through ray2sing",
+    "src": ["parse"]
+  },
+  "capabilities": {
+    "xhttp": "unknown",
+    "reality": true,
+    "hysteria2": true,
+    "tuic": true,
+    "wireguard": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["deps"],
+  "headersRead": [
+    { "name": "profile-title", "format": "base64:", "src": ["pp"] },
+    { "name": "content-disposition", "format": "filename*=", "src": ["pp"] },
+    {
+      "name": "subscription-userinfo",
+      "note": "v4.1.1 needs total and expire, no segment without \"=\"",
+      "src": ["pp"]
+    },
+    { "name": "profile-update-interval", "format": "integer hours (v4.1.1 throws otherwise)", "src": ["pp"] },
+    { "name": "support-url", "src": ["pp"] },
+    { "name": "profile-web-page-url", "src": ["pp"] },
+    { "name": "fragment", "format": "size,sleep,method", "src": ["pp"] },
+    { "name": "ipinfo-url", "src": ["pp"] },
+    { "name": "extra-security", "src": ["pp"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "hiddify://import/{URL}#{NAME}",
+      "note": "also install-config?url=; for sing-box:// and clash:// it reads name=, not the fragment",
+      "src": ["lp"]
+    }
+  ],
+  "limits": [
+    { "text": "#key: value lines in the first 10 body lines count as headers", "src": ["pp"] }
+  ],
+  "pitfalls": [
+    {
+      "text": "UA contains \"sing-box\" and \"ClashMeta\" mid-string: unanchored sing-?box or clashmeta rules catch it",
+      "src": ["ua"]
+    }
+  ],
+  "sources": {
+    "ua": { "ref": "hiddify/hiddify-app@v4.1.1:lib/core/model/app_info_entity.dart:20", "kind": "source" },
+    "uax": { "ref": "hiddify/hiddify-app@v4.1.1:lib/features/profile/data/profile_parser.dart:158", "kind": "source" },
+    "pp": {
+      "ref": "hiddify/hiddify-app@2ab88d9:lib/features/profile/data/profile_parser.dart:53-63,161-176,363-421,540-558 (v4.1.1 bugs at 284-286,359)",
+      "kind": "source"
+    },
+    "lp": { "ref": "hiddify/hiddify-app@2ab88d9:lib/utils/link_parsers.dart:34-44", "kind": "source" },
+    "parse": { "ref": "hiddify/hiddify-core@v4.1.0:v2/config/parser.go:61-110", "kind": "source" },
+    "deps": {
+      "ref": "hiddify/hiddify-app@v4.1.1:dependencies.properties:1; hiddify-core@v4.1.0 go.mod:261,278",
+      "kind": "source"
+    }
+  }
+}

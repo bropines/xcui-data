@@ -1,0 +1,64 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "saeeddev94-xray",
+  "name": "Xray (saeeddev94)",
+  "family": "xray",
+  "platforms": ["android"],
+  "openSource": true,
+  "repo": "github.com/saeeddev94/xray",
+  "latest": [
+    { "version": "v13.0.0", "date": "2026-10-21" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.10.21", "src": ["sub"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^io\\.github\\.saeeddev94\\.xray/", "example": "io.github.saeeddev94.xray/13.0.0", "src": ["ua"] }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "random 16-byte hex, generated once", "when": "default-off", "src": ["hwid"] }
+  ],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_BASE64",
+  "bestWhy": {
+    "text": "the user picks the link type (Json = array of full configs, Subscription = base64); the server cannot see which. Remnawave JSON fallback upgrades it only with serveJsonAtBaseSubscription",
+    "src": ["links", "rwext"]
+  },
+  "capabilities": {
+    "balancer": true,
+    "observatory": true,
+    "routing": true,
+    "xhttp": true,
+    "reality": true,
+    "vision": true,
+    "vlessEncryption": true,
+    "hysteria2": true,
+    "wireguard": true,
+    "finalmask": true,
+    "tun": true
+  },
+  "capabilitiesSrc": ["sub"],
+  "headersRead": [],
+  "deepLinks": [
+    { "template": "xray://import-profile", "note": "declared; handler not located", "src": ["dl"] }
+  ],
+  "limits": [
+    { "text": "a Json link must be an array; remarks are removed and become the profile name", "src": ["links"] }
+  ],
+  "pitfalls": [],
+  "sources": {
+    "ua": { "ref": "saeeddev94/xray@v13.0.0:helper/HttpHelper.kt:40-47", "kind": "source" },
+    "hwid": {
+      "ref": "saeeddev94/xray@v13.0.0:Settings.kt:116-118; activity/SettingsActivity.kt:171-175",
+      "kind": "source"
+    },
+    "links": { "ref": "saeeddev94/xray@v13.0.0:activity/LinksManagerActivity.kt:132-175", "kind": "source" },
+    "dl": { "ref": "saeeddev94/xray@v13.0.0:AndroidManifest.xml:43-46", "kind": "source" },
+    "sub": { "ref": "saeeddev94/xray@v13.0.0 Xray-core submodule 1b1647cd", "kind": "source" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    }
+  }
+}

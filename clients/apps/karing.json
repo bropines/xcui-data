@@ -1,0 +1,61 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "karing",
+  "name": "Karing",
+  "vendor": "KaringX",
+  "family": "sing-box",
+  "platforms": ["android", "ios", "tvos", "macos", "windows", "linux"],
+  "openSource": false,
+  "repo": "github.com/KaringX/karing (UI only; HttpUtils unpublished)",
+  "brandIcon": "Karing",
+  "latest": [
+    { "version": "v1.2.25.2802", "date": "2026-09-10" }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "1.13.0 (release), 1.14.0 (main)", "src": ["sm"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "karing",
+      "example": "karing/1.2.25.2802",
+      "note": "real format unverified; users can append compatible strings",
+      "src": ["sm", "rwdef"]
+    }
+  ],
+  "uaOverridable": "global",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-off", "src": ["issue", "rwhwid"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-off", "src": ["issue", "rwhwid"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-off", "src": ["issue", "rwhwid"] },
+    { "name": "x-device-model", "value": "model", "when": "default-off", "src": ["issue", "rwhwid"] }
+  ],
+  "accepts": ["SINGBOX", "MIHOMO", "CLASH", "XRAY_BASE64"],
+  "best": "SINGBOX",
+  "bestWhy": { "text": "sing-box core; Remnawave default routes it to SINGBOX", "src": ["rwdef"] },
+  "capabilities": { "xhttp": false, "tun": true },
+  "capabilitiesSrc": ["sm"],
+  "headersRead": [
+    { "name": "(unknown)", "note": "parser in unpublished code", "src": ["sm"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "karing://install-config?url={URL_ENC}&name={NAME}",
+      "note": "&hwid=true enables HWID; handles clash:// and sing-box:// too",
+      "src": ["sch"]
+    }
+  ],
+  "limits": [
+    { "text": "refreshes traffic with HEAD: the panel must return headers on HEAD", "src": ["srv"] }
+  ],
+  "pitfalls": [
+    { "text": "a user who sends only \"mihomo/…\" (append off) hits the Mihomo rule", "src": ["srv"] }
+  ],
+  "sources": {
+    "sm": { "ref": "KaringX/karing@main:lib/app/modules/setting_manager.dart:1614-1671", "kind": "source" },
+    "srv": { "ref": "KaringX/karing@main:lib/app/modules/server_manager.dart:2491-2502", "kind": "source" },
+    "sch": { "ref": "KaringX/karing@main:lib/screens/scheme_handler.dart:22-32,114-116", "kind": "source" },
+    "issue": { "ref": "github.com/KaringX/karing/issues/1296 (v1.2.14.1700)", "kind": "release-notes" },
+    "rwhwid": { "ref": "remnawave/panel@f52f3ba:docs/features/hwid-device-limit.md:60-73", "kind": "remnawave" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

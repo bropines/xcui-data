@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "foxray",
+  "name": "FoXray",
+  "vendor": "YIGUO NETWORK INC.",
+  "family": "xray",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "latest": [
+    { "version": "unknown (missing from US store 2026-10-28)", "date": "" }
+  ],
+  "cores": [
+    { "kind": "xray", "src": ["docs"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^foxray",
+      "example": "FoXray/3.1 CFNetwork/1568 Darwin/24.0.0",
+      "note": "suffix unverified",
+      "src": ["hp"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64", "XRAY_JSON", "CLASH", "MIHOMO"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "legacy; Remnawave example blocks it; links are the safe common denominator", "src": ["rwex"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [],
+  "deepLinks": [
+    { "template": "foxray://yiguo.dev/sub/add/?url={URL_ENC}#{NAME}", "src": ["mz"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "Remnawave example uses CONTAINS \"FoxRay\" caseSensitive:true, which misses \"FoXray\"",
+      "src": ["rwex"]
+    }
+  ],
+  "sources": {
+    "docs": { "ref": "yiguo.dev/docs/apple", "kind": "docs" },
+    "hp": { "ref": "hiddify/hiddify-manager:hiddifypanel/hutils/flask.py:184", "kind": "third-party" },
+    "mz": { "ref": "marzban-docs.sm1ky.com/tutorials/url-scheme", "kind": "third-party" },
+    "rwex": {
+      "ref": "remnawave/backend@3.4.7:libs/contract/models/response-rules/response-rules-examples.ts:23-41",
+      "kind": "remnawave"
+    }
+  }
+}

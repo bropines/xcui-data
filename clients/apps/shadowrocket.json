@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "shadowrocket",
+  "name": "Shadowrocket",
+  "vendor": "Shadow Launch Technology",
+  "family": "other",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "brandIcon": "Shadowrocket",
+  "downloads": {
+    "ios": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/shadowrocket/id932747118" }
+    ],
+    "macos": [
+      { "label": "App Store", "url": "https://apps.apple.com/us/app/shadowrocket/id932747118" }
+    ]
+  },
+  "latest": [
+    { "version": "2.2.92", "date": "2026-09-07" }
+  ],
+  "cores": [
+    { "kind": "proprietary", "src": ["xb"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^shadowrocket/",
+      "example": "Shadowrocket/2701 CFNetwork/1399 Darwin/22.1.0 iPhone11,8",
+      "note": "number is a BUILD, not 2.2.92",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "?", "when": "default-off", "src": ["rwhwid"] }
+  ],
+  "accepts": ["XRAY_BASE64", "CLASH"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "parses standard v2rayN links; no Xray JSON", "src": ["xb"] },
+  "capabilities": {
+    "reality": true,
+    "vision": true,
+    "xhttp": true,
+    "hysteria2": true,
+    "tuic": true,
+    "anytls": true,
+    "wireguard": true
+  },
+  "capabilitiesSrc": ["xb"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "note": "likely; unverified", "src": ["inf"] }
+  ],
+  "deepLinks": [
+    { "template": "shadowrocket://add/{URL}#{NAME}", "src": ["rwpage"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "gate features on build number (hy2 ≥1993, AnyTLS ≥2592)", "src": ["xb"] }
+  ],
+  "sources": {
+    "ua": { "ref": "cedar2025/Xboard#667", "kind": "third-party" },
+    "xb": { "ref": "cedar2025/Xboard:app/Protocols/Shadowrocket.php:11-208", "kind": "third-party" },
+    "inf": { "ref": "no vendor docs", "kind": "unverified" },
+    "rwhwid": { "ref": "remnawave/panel@f52f3ba:docs/features/hwid-device-limit.md:60-73", "kind": "remnawave" },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:472",
+      "kind": "remnawave"
+    }
+  }
+}

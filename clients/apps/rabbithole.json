@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "rabbithole",
+  "name": "Rabbit Hole",
+  "vendor": "RABBIT HOLE STUDIO",
+  "family": "mihomo",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "latest": [
+    { "version": "1.6.0", "date": "2026-10-04" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "note": "inferred from docs recommending Mihomo YAML", "src": ["cfg"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^rabbit-hole/", "example": "Rabbit-Hole/iOS (1.6.0-215; language en_US)", "src": ["hdr"] },
+    {
+      "regex": "^clash-meta/rabbithole",
+      "example": "Clash-Meta/RabbitHole (Build #180; language en_US)",
+      "note": "obsolete",
+      "src": ["hdr"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "always", "src": ["hdr"] },
+    { "name": "x-device-os", "value": "OS name", "when": "always", "src": ["hdr"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "always", "src": ["hdr"] },
+    { "name": "x-device-model", "value": "model", "when": "always", "src": ["hdr"] },
+    { "name": "x-app-version", "value": "app version", "when": "always", "src": ["hdr"] }
+  ],
+  "accepts": ["MIHOMO", "XRAY_JSON"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "\"Rabbit Hole recommends Mihomo YAML\"", "src": ["cfg"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    { "name": "display-mode", "format": "single|full", "src": ["hdr"] },
+    { "name": "force-display-mode", "src": ["hdr"] },
+    { "name": "use-progress-bar", "src": ["hdr"] },
+    { "name": "protocols-hidden", "src": ["hdr"] },
+    { "name": "exclude-filter", "format": "regex", "src": ["hdr"] },
+    { "name": "profile-title", "format": "base64", "src": ["hdr"] },
+    { "name": "subscription-userinfo", "src": ["hdr"] },
+    { "name": "subscription-refill-date", "src": ["hdr"] },
+    { "name": "support-url", "src": ["hdr"] },
+    { "name": "profile-update-interval", "src": ["hdr"] }
+  ],
+  "deepLinks": [
+    { "template": "rabbithole://add/{URL}", "src": ["dl"] }
+  ],
+  "limits": [
+    { "text": "iOS VPN extension 50 MB; keep rule-providers within 25–30 MB", "src": ["cfg"] }
+  ],
+  "pitfalls": [
+    {
+      "text": "'rabbithole' (no hyphen) never matches Rabbit-Hole/…; use ^rabbit (moved to MIHOMO in backend PR #148; docs still show rabbithole in SINGBOX)",
+      "src": ["rwdef", "rwdocs"]
+    }
+  ],
+  "sources": {
+    "hdr": { "ref": "rabbit-hole-1.gitbook.io …/for-devs/rabbit-hole-headers", "kind": "docs" },
+    "cfg": { "ref": "rabbit-hole-1.gitbook.io …/for-devs/config-setup", "kind": "docs" },
+    "dl": { "ref": "rabbit-hole-1.gitbook.io …/deep-links-and-user-flow", "kind": "docs" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" },
+    "rwdocs": { "ref": "remnawave/panel@f52f3ba:docs/learn-en/routing-rules.md:176", "kind": "remnawave" }
+  }
+}

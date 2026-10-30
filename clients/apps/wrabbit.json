@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "wrabbit",
+  "name": "Wrabbit Proxy",
+  "family": "xray",
+  "platforms": ["ios", "macos"],
+  "openSource": false,
+  "latest": [
+    { "version": "2.1.0", "date": "2026-08-11" }
+  ],
+  "cores": [
+    { "kind": "xray", "version": "v26.6.1", "src": ["site"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^wrabbit",
+      "example": "Wrabbit/2.1.0",
+      "note": "prefix observed by the operator; full format unknown",
+      "src": ["op"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": { "text": "operator serves full Xray configs with balancers to it", "src": ["op"] },
+  "capabilities": { "reality": true, "xhttp": true, "hysteria2": true, "balancer": "unknown" },
+  "capabilitiesSrc": ["site"],
+  "headersRead": [],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    { "text": "not matched by the anchored ^rabbit (Mihomo) alternative: keep its rule explicit", "src": ["rwdef"] }
+  ],
+  "sources": {
+    "site": { "ref": "wrab.site/en; App Store description", "kind": "docs" },
+    "op": { "ref": "operator production Response Rules (private), 2026-10", "kind": "operator" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

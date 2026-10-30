@@ -1,0 +1,36 @@
+name: CI
+
+# Every push and pull request: the data against its schema and its tests,
+# every file in the repository's format, the package builds and packs.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - name: Data and format (lists every problem)
+        run: bun run check
+      - name: Tests
+        run: bun test
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Build and pack
+        run: |
+          bun run build
+          npm pack --dry-run

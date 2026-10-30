@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "v2box",
+  "name": "V2Box",
+  "vendor": "Hexa Software",
+  "family": "xray",
+  "platforms": ["ios", "macos", "android"],
+  "openSource": false,
+  "brandIcon": "VTwoBox",
+  "latest": [
+    { "version": "10.1.9", "date": "2026-10-06", "platform": ["ios", "macos"] }
+  ],
+  "cores": [
+    { "kind": "xray", "src": ["notes"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^v2box",
+      "example": "V2Box/10.1.9 CFNetwork/3860.100.1 Darwin/26.0.0",
+      "note": "format unverified",
+      "src": ["rwext"]
+    }
+  ],
+  "uaOverridable": "unknown",
+  "requestHeaders": [],
+  "accepts": ["XRAY_JSON", "XRAY_BASE64"],
+  "best": "XRAY_JSON",
+  "bestWhy": {
+    "text": "Remnawave: all versions; 10.1.9 notes say configs with a balancer strategy now load",
+    "src": ["rwjson", "notes"]
+  },
+  "capabilities": { "balancer": true, "finalmask": true, "hysteria2": true, "wireguard": true },
+  "capabilitiesSrc": ["notes"],
+  "headersRead": [
+    { "name": "(support/website links, update interval, lock)", "note": "header names undocumented", "src": ["notes"] }
+  ],
+  "deepLinks": [
+    {
+      "template": "v2box://install-sub?url={URL_ENC}&name={NAME}",
+      "note": "from Telegram Desktop it needs a redirect page",
+      "src": ["mz", "rwtg"]
+    }
+  ],
+  "limits": [],
+  "pitfalls": [],
+  "sources": {
+    "notes": { "ref": "App Store V2Box 10.1.9 notes", "kind": "release-notes" },
+    "mz": { "ref": "marzban-docs.sm1ky.com/tutorials/url-scheme", "kind": "third-party" },
+    "rwtg": {
+      "ref": "remnawave/panel@f52f3ba:docs/awesome-remnawave/_install-guides/remnawave-telegram-mini-app.md:16",
+      "kind": "remnawave"
+    },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    },
+    "rwjson": {
+      "ref": "remnawave/panel@f52f3ba:_panel-docs/help-articles/en/EDITOR_TEMPLATES_XRAY_JSON.md:5-12",
+      "kind": "remnawave"
+    }
+  }
+}

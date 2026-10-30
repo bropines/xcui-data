@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "murge",
+  "name": "Murge",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/RoaycL/Murge (assumed to be the one Remnawave means)",
+  "latest": [
+    { "version": "v0.9.36", "date": "2026-10-27" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.30", "src": ["assets"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^clashforwindows/",
+      "example": "ClashforWindows/0.20.39",
+      "note": "hard-coded; indistinguishable from real CFW",
+      "src": ["ua"]
+    }
+  ],
+  "uaOverridable": "no",
+  "requestHeaders": [
+    {
+      "name": "Accept",
+      "value": "application/x-yaml,text/yaml,text/plain,application/octet-stream,*/*",
+      "when": "always",
+      "src": ["ua"]
+    }
+  ],
+  "accepts": ["MIHOMO", "CLASH"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo core, but its UA lands in ^clash (CLASH)", "src": ["ua", "assets"] },
+  "capabilities": { "xhttp": true },
+  "capabilitiesSrc": ["assets"],
+  "headersRead": [
+    { "name": "content-disposition", "src": ["ua"] }
+  ],
+  "deepLinks": [
+    { "template": "murge://…", "note": "format not checked", "src": ["brand"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "the 'murge' alternative in Remnawave's Mihomo regex never matches its UA", "src": ["ua", "rwdef"] }
+  ],
+  "sources": {
+    "ua": { "ref": "RoaycL/Murge@v0.9.36:src/main/subscriptions/subscription-fetcher.ts:85-88,656", "kind": "source" },
+    "assets": { "ref": "RoaycL/Murge@v0.9.36:resources/mihomo-assets.json:2", "kind": "source" },
+    "brand": { "ref": "RoaycL/Murge@v0.9.36:brand.config.json:8", "kind": "source" },
+    "rwdef": { "ref": "remnawave/backend@3.4.7:prisma/seed/default/response-rules.ts:8-95", "kind": "remnawave" }
+  }
+}

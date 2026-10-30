@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "koala-clash",
+  "name": "Koala Clash",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/coolcoala/koala-clash (ex clash-verge-rev-lite)",
+  "brandIcon": "KoalaClash",
+  "downloads": {
+    "windows": [
+      {
+        "label": "Windows (x64)",
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_x64-setup.exe"
+      }
+    ],
+    "macos": [
+      {
+        "label": "Apple Silicon",
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_aarch64.dmg"
+      },
+      {
+        "label": "Intel",
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_x64.dmg"
+      }
+    ],
+    "linux": [
+      {
+        "label": "amd64 (.deb)",
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_amd64.deb"
+      },
+      {
+        "label": "arm64 (.deb)",
+        "url": "https://github.com/coolcoala/clash-verge-rev-lite/releases/latest/download/Koala.Clash_arm64.deb"
+      }
+    ]
+  },
+  "latest": [
+    { "version": "1.5.0", "date": "2026-10-09" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "src": ["prep"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^koala-clash/", "example": "koala-clash/1.5.0", "note": "no \"v\"", "src": ["ua"] }
+  ],
+  "uaOverridable": "global+per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "always", "src": ["prof", "dev"] },
+    { "name": "x-device-os", "value": "OS name", "when": "always", "src": ["prof", "dev"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "always", "src": ["prof", "dev"] },
+    { "name": "x-device-model", "value": "model", "when": "always", "src": ["prof", "dev"] }
+  ],
+  "accepts": ["MIHOMO"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "mihomo; Remnawave extended client", "src": ["rwext"] },
+  "capabilities": { "xhttp": true, "reality": true, "tun": true },
+  "capabilitiesSrc": ["prep"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["hdr"] },
+    { "name": "profile-title", "format": "base64:", "src": ["hdr"] },
+    { "name": "content-disposition", "src": ["hdr"] },
+    { "name": "profile-web-page-url", "src": ["hdr"] },
+    { "name": "profile-web-page-name", "format": "base64:", "src": ["hdr"] },
+    { "name": "profile-update-interval", "format": "hours; locks the interval", "src": ["hdr"] },
+    { "name": "profile-logo", "format": "URL", "src": ["hdr"] },
+    { "name": "support-url", "src": ["hdr"] },
+    { "name": "announce", "format": "base64:, \\n becomes a newline", "src": ["hdr"] },
+    { "name": "global-mode", "format": "false disables", "src": ["hdr"] },
+    { "name": "expand-proxy-groups", "src": ["hdr"] },
+    { "name": "custom-css", "format": "URL", "src": ["hdr"] },
+    {
+      "name": "x-hwid-limit",
+      "format": "true",
+      "note": "or x-hwid-max-devices-reached: blocks adding the profile",
+      "src": ["hdr"]
+    }
+  ],
+  "deepLinks": [
+    {
+      "template": "koala-clash://install-config?url={URL_ENC}&name={NAME}",
+      "note": "confirm dialog; clash:// and mihomo:// too",
+      "src": ["dl", "rwpage"]
+    }
+  ],
+  "limits": [
+    { "text": "rejects an HTML/XML content-type", "src": ["hdr"] }
+  ],
+  "pitfalls": [
+    { "text": "header names matched with endsWith, so any prefix works", "src": ["hdr"] }
+  ],
+  "sources": {
+    "ua": { "ref": "coolcoala/koala-clash@1.5.0:src/main/utils/userAgent.ts:10", "kind": "source" },
+    "prof": { "ref": "coolcoala/koala-clash@1.5.0:src/main/config/profile.ts:277-281", "kind": "source" },
+    "dev": { "ref": "coolcoala/koala-clash@1.5.0:src/main/utils/deviceInfo.ts:18-55", "kind": "source" },
+    "hdr": { "ref": "coolcoala/koala-clash@1.5.0:src/main/config/profile.ts:303-420", "kind": "source" },
+    "dl": {
+      "ref": "coolcoala/koala-clash@1.5.0:electron-builder.yml:19-24; src/main/index.ts:381-393",
+      "kind": "source"
+    },
+    "prep": { "ref": "coolcoala/koala-clash@1.5.0:scripts/prepare.mjs", "kind": "source" },
+    "rwext": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-template/constants/extended-clients.ts:1-28",
+      "kind": "remnawave"
+    },
+    "rwpage": {
+      "ref": "remnawave/backend@3.4.7:src/modules/subscription-page-configs/constants/default-subpage-config.ts:856",
+      "kind": "remnawave"
+    }
+  }
+}

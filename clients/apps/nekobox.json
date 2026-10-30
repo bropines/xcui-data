@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "nekobox",
+  "name": "NekoBox (Android) / NekoRay (PC)",
+  "vendor": "MatsuriDayo",
+  "family": "sing-box",
+  "platforms": ["android", "windows", "linux"],
+  "openSource": true,
+  "repo": "github.com/MatsuriDayo/NekoBoxForAndroid; MatsuriDayo/nekoray (archived)",
+  "latest": [
+    { "version": "1.4.2", "date": "2026-02-09", "platform": ["android"] },
+    { "version": "4.0.1", "date": "2024-12-12", "platform": ["windows", "linux"] }
+  ],
+  "cores": [
+    { "kind": "sing-box", "version": "1.12.19-neko-1", "src": ["gomod"] }
+  ],
+  "uaPatterns": [
+    {
+      "regex": "^nekobox/(?:android|pc)/",
+      "example": "NekoBox/Android/1.4.2 (Prefer ClashMeta Format)",
+      "src": ["ua", "uapc"]
+    }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [],
+  "accepts": ["XRAY_BASE64", "CLASH", "MIHOMO", "SINGBOX"],
+  "best": "XRAY_BASE64",
+  "bestWhy": {
+    "text": "from a JSON it keeps only outbounds that have a \"type\" (Xray JSON is dropped)",
+    "src": ["raw"]
+  },
+  "capabilities": { "xhttp": false, "reality": true, "hysteria2": true, "tuic": true, "tun": true },
+  "capabilitiesSrc": ["gomod"],
+  "headersRead": [
+    { "name": "subscription-userinfo", "src": ["raw"] },
+    { "name": "content-disposition", "note": "renames a default group", "src": ["raw"] }
+  ],
+  "deepLinks": [
+    { "template": "sn://subscription?url={URL_ENC}&name={NAME}", "note": "clash://install-config too", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "UA contains \"ClashMeta\"; anchored rules are fine", "src": ["ua"] }
+  ],
+  "sources": {
+    "ua": { "ref": "MatsuriDayo/NekoBoxForAndroid@1.4.2:ktx/Nets.kt:66", "kind": "source" },
+    "uapc": { "ref": "MatsuriDayo/nekoray@4.0.1:main/NekoGui.cpp:299-309", "kind": "source" },
+    "raw": { "ref": "MatsuriDayo/NekoBoxForAndroid@1.4.2:group/RawUpdater.kt:70-86,768-790", "kind": "source" },
+    "dl": { "ref": "MatsuriDayo/NekoBoxForAndroid@1.4.2:AndroidManifest.xml:102-115", "kind": "source" },
+    "gomod": { "ref": "MatsuriDayo/NekoBoxForAndroid@1.4.2:libcore/go.mod:87", "kind": "source" }
+  }
+}

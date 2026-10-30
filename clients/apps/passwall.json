@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "passwall",
+  "name": "Passwall / Passwall2 (OpenWrt)",
+  "family": "xray",
+  "platforms": ["openwrt"],
+  "openSource": true,
+  "repo": "github.com/Openwrt-Passwall",
+  "latest": [
+    { "version": "passwall 26.10.22-2", "date": "2026-10-22" },
+    { "version": "passwall2 26.10.20-1", "date": "2026-10-20" }
+  ],
+  "cores": [
+    { "kind": "xray", "src": ["p2"] },
+    { "kind": "sing-box", "src": ["p2"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^passwall2?/", "example": "passwall/26.10.22", "src": ["p1", "p2"] },
+    { "regex": "^v2rayn/9\\.99$", "example": "v2rayN/9.99", "note": "Passwall2 default UA", "src": ["p2"] }
+  ],
+  "uaOverridable": "global",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "default-off", "src": ["p2hw"] },
+    { "name": "x-device-os", "value": "OS name", "when": "default-off", "src": ["p2hw"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "default-off", "src": ["p2hw"] },
+    { "name": "x-device-model", "value": "model", "when": "default-off", "src": ["p2hw"] }
+  ],
+  "accepts": ["XRAY_BASE64", "CLASH"],
+  "best": "XRAY_BASE64",
+  "bestWhy": { "text": "no full Xray JSON support", "src": ["p2"] },
+  "capabilities": {},
+  "capabilitiesSrc": [],
+  "headersRead": [
+    { "name": "subscription-userinfo", "note": "passwall (1) only", "src": ["p1"] }
+  ],
+  "deepLinks": [],
+  "limits": [],
+  "pitfalls": [
+    {
+      "text": "Passwall2 default v2rayN/9.99 must NOT match a v2rayN JSON rule: require a 3-part version",
+      "src": ["p2"]
+    }
+  ],
+  "sources": {
+    "p1": {
+      "ref": "Openwrt-Passwall/openwrt-passwall:root/usr/share/passwall/subscribe.lua:1808-1809; clash_subconverter.lua:668-676",
+      "kind": "source"
+    },
+    "p2": {
+      "ref": "Openwrt-Passwall/openwrt-passwall2:luasrc/model/cbi/passwall2/client/node_subscribe_config.lua:272-279",
+      "kind": "source"
+    },
+    "p2hw": { "ref": "Openwrt-Passwall/openwrt-passwall2:subscribe.lua:2181-2230", "kind": "source" }
+  }
+}

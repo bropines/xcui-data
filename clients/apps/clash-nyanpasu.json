@@ -1,0 +1,58 @@
+{
+  "$schema": "../../schema/client-app.schema.json",
+  "id": "clash-nyanpasu",
+  "name": "Clash Nyanpasu",
+  "family": "mihomo",
+  "platforms": ["windows", "macos", "linux"],
+  "openSource": true,
+  "repo": "github.com/libnyanpasu/clash-nyanpasu",
+  "latest": [
+    { "version": "v2.0.0", "date": "2026-10-27" }
+  ],
+  "cores": [
+    { "kind": "mihomo", "version": "v1.19.33 (+alpha)", "src": ["man"] },
+    { "kind": "clash-rs", "version": "v0.10.10", "src": ["man"] },
+    { "kind": "clash-premium", "version": "2023-09-05", "src": ["man"] }
+  ],
+  "uaPatterns": [
+    { "regex": "^clash-nyanpasu/", "example": "clash-nyanpasu/v2.0.0", "src": ["ua"] }
+  ],
+  "uaOverridable": "per-subscription",
+  "requestHeaders": [
+    { "name": "x-hwid", "value": "device id", "when": "always", "src": ["ua", "hw"] },
+    { "name": "x-device-os", "value": "OS name", "when": "always", "src": ["ua", "hw"] },
+    { "name": "x-ver-os", "value": "OS version", "when": "always", "src": ["ua", "hw"] },
+    { "name": "x-device-model", "value": "model", "when": "always", "src": ["ua", "hw"] }
+  ],
+  "accepts": ["MIHOMO", "CLASH"],
+  "best": "MIHOMO",
+  "bestWhy": { "text": "default core is mihomo", "src": ["man"] },
+  "capabilities": { "xhttp": "partial", "reality": "partial", "tun": true },
+  "capabilitiesSrc": ["man"],
+  "headersRead": [
+    { "name": "profile-title", "format": "plain|base64:", "src": ["pt"] },
+    { "name": "profile-update-interval", "format": "hours", "src": ["pt"] },
+    { "name": "subscription-userinfo", "src": ["pt"] },
+    { "name": "content-disposition", "src": ["pt"] }
+  ],
+  "deepLinks": [
+    { "template": "clash-nyanpasu://install-config?url={URL_ENC}&name={NAME}", "note": "clash:// too", "src": ["dl"] }
+  ],
+  "limits": [],
+  "pitfalls": [
+    { "text": "same UA on clash-rs/Premium cores, which cannot run XHTTP or newer protocols", "src": ["man"] }
+  ],
+  "sources": {
+    "ua": {
+      "ref": "libnyanpasu/clash-nyanpasu@v2.0.0:backend/tauri/src/service/profile_file.rs:2081-2098",
+      "kind": "source"
+    },
+    "hw": { "ref": "libnyanpasu/clash-nyanpasu@v2.0.0:backend/tauri/src/utils/hwid.rs:53-60", "kind": "source" },
+    "pt": {
+      "ref": "libnyanpasu/clash-nyanpasu@v2.0.0:backend/tauri/src/service/profile_file.rs:2187-2200",
+      "kind": "source"
+    },
+    "dl": { "ref": "libnyanpasu/clash-nyanpasu@v2.0.0:frontend/nyanpasu/src/utils/deep-link.ts:5-17", "kind": "source" },
+    "man": { "ref": "libnyanpasu/clash-nyanpasu@v2.0.0:manifest/version.json:4-10", "kind": "source" }
+  }
+}
